@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TextInputView">
+        <attr name="android:inputType" />
+        <attr name="android:imeOptions" />
+        <attr name="android:hint" />
+        <attr name="android:maxLength" />
+    </declare-styleable>
+
+    <declare-styleable name="BaseInputView">
+        <attr name="title" format="reference|string" />
+        <attr name="hint" format="reference|string" />
+        <attr name="text" format="reference|string" />
+        <attr name="icon" format="reference" />
+        <attr name="input_view_title_color" format="reference|color" />
+        <attr name="input_view_text_color" format="reference|color" />
+        <attr name="hint_color" format="reference|color" />
+        <attr name="border_color" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="ErrorState">
+        <attr name="state_error" format="boolean" />
+    </declare-styleable>
+</resources>

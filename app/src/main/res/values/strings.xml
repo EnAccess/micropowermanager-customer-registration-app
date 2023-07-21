@@ -1,0 +1,57 @@
+<resources>
+    <string name="error">Error</string>
+    <string name="warning">Warning</string>
+    <string name="ok">OK</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="loading_message">In Progress…</string>
+
+    <string name="login_subtitle">"Welcome Back, \nplease login to your account"</string>
+    <string name="login_email_hint">"business@mail.com"</string>
+    <string name="login_email_title">"Email"</string>
+    <string name="login_password_hint">"● ● ● ● ● ●"</string>
+    <string name="login_password_title">"Password"</string>
+    <string name="login_forgot_password">"Forgot Your Password?"</string>
+    <string name="login_button">"Login"</string>
+    <string name="login_rights_reserved">"© 2018 - INENSUS GmbH · All rights reserved."</string>
+    <string name="error_session_expired">Your session has expired. Please sign in.</string>
+    <string name="error_network_snackbar">No Network Connection</string>
+
+    <string name="action_check">"Check"</string>
+    <string name="action_sync">"Sync"</string>
+    <string name="action_cancel">"Cancel"</string>
+    <string name="action_save">"Save"</string>
+    <string name="customer_list">"Customer List"</string>
+    <string name="customer_name_surname">%s %s</string>
+    <string name="customer_id">Id: %s</string>
+    <string name="locale_storage">Locale Storage</string>
+    <string name="delete_customer">Are you sure you want to delete customer from Local Storage?</string>
+    <string name="add_customer">"Add Customer"</string>
+    <string name="empty_list_header">"This Customer List is empty!"</string>
+    <string name="empty_list_body">"Once you add a new customer, you'll see it listed here"</string>
+    <string name="exit">"Press back again to exit"</string>
+
+    <string name="add_customer_name_title">Name</string>
+    <string name="add_customer_name_hint">e.g. John</string>
+    <string name="add_customer_surname_title">Surname</string>
+    <string name="add_customer_surname_hint">e.g. Doe</string>
+    <string name="add_customer_phone_number_title">Phone Number</string>
+    <string name="add_customer_phone_number_hint">+###########</string>
+    <string name="add_customer_serial_number_title">Serial Number</string>
+    <string name="add_customer_serial_number_hint">###########</string>
+    <string name="add_customer_manufacturer">Manufacturer</string>
+    <string name="add_customer_meter_type">Meter Type</string>
+    <string name="add_customer_tariff">Tariff</string>
+    <string name="add_customer_city">City</string>
+    <string name="add_customer_connection_group">Connection Group</string>
+    <string name="add_customer_connection_type">Connection Type</string>
+    <string name="add_customer_sub_connection_type">Sub Connection Type</string>
+
+    <string name="error_message_title">"Service Error"</string>
+    <string name="title_server_url">"Server Url"</string>
+    <string name="hint_server_url">"e.g. http://localhost.com"</string>
+    <string name="server_url_validation">"Server Url is not valid, please check and try again."</string>
+    <string name="dropdown_placeholder">Select</string>
+
+    <string name="login_forgot_password_action">Please contact your Administrator for assistance.</string>
+</resources>

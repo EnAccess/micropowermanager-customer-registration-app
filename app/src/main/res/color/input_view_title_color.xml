@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:color="#FF3B30" app:state_error="true" />
+    <item android:color="#2D2F31" android:state_activated="true" android:state_enabled="true" />
+    <item android:color="#616161" android:state_activated="false" android:state_enabled="true" />
+    <item android:color="#BDBDBD" />
+</selector>
