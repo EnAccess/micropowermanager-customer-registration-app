@@ -47,12 +47,12 @@ class AddCustomerRepository(
     }
 
     companion object {
-        private const val MANUFACTURERS_ENDPOINT = "manufacturers"
-        private const val METER_TYPES_ENDPOINT = "meter-types"
-        private const val TARIFFS_ENDPOINT = "tariffs"
-        private const val CITIES_ENDPOINT = "cities"
-        private const val CONNECTION_GROUPS_ENDPOINT = "connection-groups"
-        private const val CONNECTION_TYPES_ENDPOINT = "connection-types"
-        private const val SUB_CONNECTION_TYPES_ENDPOINT = "sub-connection-types"
+        private const val MANUFACTURERS_ENDPOINT = "customer-registration-app/manufacturers"
+        private const val METER_TYPES_ENDPOINT = "customer-registration-app/meter-types"
+        private const val TARIFFS_ENDPOINT = "customer-registration-app/tariffs"
+        private const val CITIES_ENDPOINT = "customer-registration-app/cities"
+        private const val CONNECTION_GROUPS_ENDPOINT = "customer-registration-app/connection-groups"
+        private const val CONNECTION_TYPES_ENDPOINT = "customer-registration-app/connection-types"
+        private const val SUB_CONNECTION_TYPES_ENDPOINT = "customer-registration-app/sub-connection-types"
     }
 }

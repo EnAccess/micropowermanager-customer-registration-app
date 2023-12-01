@@ -71,7 +71,7 @@ class CustomerListRepository(
     }
 
     companion object {
-        private const val ADD_CUSTOMER_ENDPOINT = "androidApp"
-        private const val CUSTOMERS_ENDPOINT = "people/all"
+        private const val ADD_CUSTOMER_ENDPOINT = "customer-registration-app"
+        private const val CUSTOMERS_ENDPOINT = "customer-registration-app/people"
     }
 }
