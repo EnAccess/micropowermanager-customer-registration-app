@@ -2,7 +2,7 @@
   <a href="https://github.com/EnAccess/micropowermanager">
     <img
       src="https://micropowermanager.io/mpmlogo_raw.png"
-      alt="OpenSmartMeter"
+      alt="MicroPowerManager Customer Registration App"
       width="320"
     >
   </a>
