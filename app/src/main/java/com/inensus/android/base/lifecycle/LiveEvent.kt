@@ -26,11 +26,10 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
-//        Temporarily removed to fix: Type inference failed. The value of the type parameter T should be mentioned in input types (argument types, receiver type or expected type). Try to specify it explicitly.
-//        if (observers.remove(observer)) {
-//            super.removeObserver(observer)
-//            return
-//        }
+        if (observers.remove(observer)) {
+            super.removeObserver(observer)
+            return
+        }
         val iterator = observers.iterator()
         while (iterator.hasNext()) {
             val wrapper = iterator.next()
