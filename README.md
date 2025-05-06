@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/EnAccess/micropowermanager">
+  <a href="https://github.com/EnAccess/micropowermanager-customer-registration-app">
     <img
       src="https://micropowermanager.io/mpmlogo_raw.png"
       alt="MicroPowerManager Customer Registration App"
@@ -17,12 +17,12 @@
   >
   <img
     alt="GitHub Workflow Status"
-    src="https://img.shields.io/github/actions/workflow/status/EnAccess/micropowermanager/check-generic.yaml"
+    src="https://img.shields.io/github/actions/workflow/status/EnAccess/micropowermanager-customer-registration-app/check-generic.yaml"
   >
-  <a href="https://github.com/EnAccess/micropowermanager/blob/main/LICENSE" target="_blank">
+  <a href="https://github.com/EnAccess/micropowermanager-customer-registration-app/blob/main/LICENSE" target="_blank">
     <img
       alt="License"
-      src="https://img.shields.io/github/license/EnAccess/micropowermanager"
+      src="https://img.shields.io/github/license/EnAccess/micropowermanager-customer-registration-app"
     >
   </a>
 </p>
