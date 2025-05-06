@@ -12,7 +12,10 @@ import com.inensus.android.base.view.BaseFragment
 import com.inensus.android.base.view.InputBottomSheetFragment
 import com.inensus.android.login.viewmodel.LoginViewModel
 import com.inensus.android.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.emailInput
+import kotlinx.android.synthetic.main.fragment_login.forgotPasswordText
+import kotlinx.android.synthetic.main.fragment_login.loginButton
+import kotlinx.android.synthetic.main.fragment_login.passwordInput
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
@@ -20,8 +23,8 @@ class LoginFragment : BaseFragment() {
     private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_login, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,11 +74,11 @@ class LoginFragment : BaseFragment() {
 
         forgotPasswordText.setOnClickListener {
             AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.warning))
-                    .setCancelable(false)
-                    .setMessage(getString(R.string.login_forgot_password_action))
-                    .setPositiveButton(getString(R.string.ok)) { _, _ -> }
-                    .show()
+                .setTitle(getString(R.string.warning))
+                .setCancelable(false)
+                .setMessage(getString(R.string.login_forgot_password_action))
+                .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+                .show()
         }
     }
 

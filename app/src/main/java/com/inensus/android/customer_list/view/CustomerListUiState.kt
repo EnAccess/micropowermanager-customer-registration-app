@@ -7,5 +7,6 @@ sealed class CustomerListUiState {
     object Empty : CustomerListUiState()
 
     object AddCustomerSuccess : CustomerListUiState()
-    data class AddCustomerError(val throwable: Throwable, val customer: Customer) : CustomerListUiState()
+    data class AddCustomerError(val throwable: Throwable, val customer: Customer) :
+        CustomerListUiState()
 }

@@ -39,34 +39,40 @@ abstract class BaseFragment : Fragment() {
     private fun observeError() {
         provideViewModel().error.observe(viewLifecycleOwner, Observer {
             AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.error))
-                    .setMessage(it.error?.message ?: "An error occurred. Please try again later")
-                    .setPositiveButton(getString(R.string.ok)) { _, _ -> }
-                    .show()
+                .setTitle(getString(R.string.error))
+                .setMessage(it.error?.message ?: "An error occurred. Please try again later")
+                .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+                .show()
         })
     }
 
     fun showWarningDialog(message: String?, callback: (() -> Unit)? = null): AlertDialog? =
-            context?.let {
-                AlertDialog.Builder(requireContext())
-                        .setTitle(getString(R.string.error))
-                        .setMessage(message)
-                        .setPositiveButton(getString(R.string.yes)) { _, _ -> callback?.invoke() }
-                        .setNegativeButton(getString(R.string.no)) { _, _ -> }
-                        .show()
-            }
+        context?.let {
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.error))
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.yes)) { _, _ -> callback?.invoke() }
+                .setNegativeButton(getString(R.string.no)) { _, _ -> }
+                .show()
+        }
 
-    fun showCustomerAlertDialog(throwable: Throwable?, customer: Customer? = null, callback: (() -> Unit)? = null) {
+    fun showCustomerAlertDialog(
+        throwable: Throwable?,
+        customer: Customer? = null,
+        callback: (() -> Unit)? = null
+    ) {
         if (context != null) {
             var errorMessage = ""
 
             if (customer != null) {
-                errorMessage = "Customer Information:\n- Name Surname: " + customer.name + " " + customer.surname + "\n- Serial Number: " + customer.serialNumber + "\n\n"
+                errorMessage =
+                    "Customer Information:\n- Name Surname: " + customer.name + " " + customer.surname + "\n- Serial Number: " + customer.serialNumber + "\n\n"
             }
 
             try {
                 if (throwable is UnknownHostException) {
-                    errorMessage = "Server Url is not valid. Please configure and restart the Application."
+                    errorMessage =
+                        "Server Url is not valid. Please configure and restart the Application."
                 } else {
                     val error = (throwable as HttpException).response()
                     val json = JSONObject(error?.errorBody()?.string())
@@ -79,22 +85,24 @@ abstract class BaseFragment : Fragment() {
                         val key = keys.next() as String
 
                         if (errorMessages.get(key) is JSONArray) {
-                            errorMessage = errorMessage + "- " + (errorMessages.get(key) as JSONArray).get(0) + "\n"
+                            errorMessage =
+                                errorMessage + "- " + (errorMessages.get(key) as JSONArray).get(0) + "\n"
                         }
                     }
                 }
             } catch (e: Exception) {
-                errorMessage = if (BuildConfig.DEBUG && e.message != null) e.message!! else "Internal Server Error"
+                errorMessage =
+                    if (BuildConfig.DEBUG && e.message != null) e.message!! else "Internal Server Error"
             }
 
             val alert = android.app.AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.error_message_title))
-                    .setMessage(errorMessage)
-                    .setPositiveButton("OK") { _, _ ->
-                        callback?.invoke()
-                    }
-                    .setCancelable(false)
-                    .create()
+                .setTitle(getString(R.string.error_message_title))
+                .setMessage(errorMessage)
+                .setPositiveButton("OK") { _, _ ->
+                    callback?.invoke()
+                }
+                .setCancelable(false)
+                .create()
 
             alert.show()
         }

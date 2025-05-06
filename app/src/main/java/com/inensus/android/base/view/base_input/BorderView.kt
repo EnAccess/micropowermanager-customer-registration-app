@@ -4,7 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 
-class BorderView(context: Context, attributeSet: AttributeSet) : AppCompatImageView(context, attributeSet), ErrorState {
+class BorderView(context: Context, attributeSet: AttributeSet) :
+    AppCompatImageView(context, attributeSet), ErrorState {
 
     private var errorState: Boolean = false
 

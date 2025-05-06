@@ -6,7 +6,10 @@ object Constants {
         RegexOption.IGNORE_CASE
     )
 
-    val HTTP_REGEX = Regex("http[s]?:\\/\\/(?:[a-z]|[0-9]|[\$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-f][0-9a-f]))+", RegexOption.IGNORE_CASE)
+    val HTTP_REGEX = Regex(
+        "http[s]?:\\/\\/(?:[a-z]|[0-9]|[\$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-f][0-9a-f]))+",
+        RegexOption.IGNORE_CASE
+    )
 
     const val ERROR_POPUP_DELAY_IN_MILLIS: Long = 100
 }

@@ -22,5 +22,6 @@ object LoginModule {
         single { LoginRepository(get(), get()) }
     }
 
-    private fun provideLoginService(retrofitClient: Retrofit) = retrofitClient.create(LoginService::class.java)
+    private fun provideLoginService(retrofitClient: Retrofit) =
+        retrofitClient.create(LoginService::class.java)
 }

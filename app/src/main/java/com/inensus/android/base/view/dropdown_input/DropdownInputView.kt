@@ -11,9 +11,12 @@ import androidx.core.view.children
 import com.inensus.android.R
 import com.inensus.android.base.view.base_input.ErrorState
 import com.inensus.android.extensions.hide
-import kotlinx.android.synthetic.main.view_dropdown_input.view.*
+import kotlinx.android.synthetic.main.view_dropdown_input.view.placeholderText
+import kotlinx.android.synthetic.main.view_dropdown_input.view.titleText
+import kotlinx.android.synthetic.main.view_dropdown_input.view.valueText
 
-class DropdownInputView(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet), ErrorState {
+class DropdownInputView(context: Context, attributeSet: AttributeSet) :
+    ConstraintLayout(context, attributeSet), ErrorState {
     var onValueChanged: ((String) -> Unit)? = null
     private var errorState: Boolean = false
     private lateinit var popupMenu: PopupMenu
@@ -34,13 +37,13 @@ class DropdownInputView(context: Context, attributeSet: AttributeSet) : Constrai
     }
 
     override fun onCreateDrawableState(extraSpace: Int): IntArray =
-            if (errorState) {
-                val drawableState = super.onCreateDrawableState(extraSpace + 1)
-                mergeDrawableStates(drawableState, ErrorState.STATE_ERROR)
-                drawableState
-            } else {
-                super.onCreateDrawableState(extraSpace)
-            }
+        if (errorState) {
+            val drawableState = super.onCreateDrawableState(extraSpace + 1)
+            mergeDrawableStates(drawableState, ErrorState.STATE_ERROR)
+            drawableState
+        } else {
+            super.onCreateDrawableState(extraSpace)
+        }
 
     private fun initializeAttributes(context: Context, attrs: AttributeSet) {
         context.obtainStyledAttributes(attrs, R.styleable.DropdownInputView).use {
@@ -85,10 +88,10 @@ class DropdownInputView(context: Context, attributeSet: AttributeSet) : Constrai
         errorState = isError
 
         children
-                .filter { it is ErrorState }
-                .forEach {
-                    (it as ErrorState).setErrorState(isError)
-                }
+            .filter { it is ErrorState }
+            .forEach {
+                (it as ErrorState).setErrorState(isError)
+            }
 
         refreshDrawableState()
     }

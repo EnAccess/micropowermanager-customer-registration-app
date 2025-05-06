@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.Intent
 import com.inensus.android.util.ConnectionChecker
 
-class ConnectivityBroadcastReceiver(private val connectionChecker: ConnectionChecker) : BroadcastReceiver() {
+class ConnectivityBroadcastReceiver(private val connectionChecker: ConnectionChecker) :
+    BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         connectionChecker.observeNetworkStatus()

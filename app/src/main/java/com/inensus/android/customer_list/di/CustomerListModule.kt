@@ -20,5 +20,6 @@ object CustomerListModule {
         single { CustomerListRepository(get(), get(), get(), get()) }
     }
 
-    private fun provideCustomerListService(retrofitClient: Retrofit) = retrofitClient.create(CustomerListService::class.java)
+    private fun provideCustomerListService(retrofitClient: Retrofit) =
+        retrofitClient.create(CustomerListService::class.java)
 }

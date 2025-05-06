@@ -10,7 +10,11 @@ import com.inensus.android.customer_list.model.Customer
 import com.inensus.android.extensions.createInitialsDrawable
 import com.inensus.android.extensions.gone
 import com.inensus.android.extensions.show
-import kotlinx.android.synthetic.main.list_item_customer.view.*
+import kotlinx.android.synthetic.main.list_item_customer.view.customerImage
+import kotlinx.android.synthetic.main.list_item_customer.view.customerNameText
+import kotlinx.android.synthetic.main.list_item_customer.view.customerPhoneNumberText
+import kotlinx.android.synthetic.main.list_item_customer.view.localeImage
+import kotlinx.android.synthetic.main.list_item_customer.view.localeText
 
 class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>() {
 
@@ -18,7 +22,7 @@ class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>
     var customers: List<Customer> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_customer, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.list_item_customer, parent, false)
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,20 +35,29 @@ class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>
         fun bind(customer: Customer) {
             with(itemView) {
                 customerImage.setImageDrawable(
-                        createInitialsDrawable(
-                                context.getString(R.string.customer_name_surname, customer.name, customer.surname),
-                                ContextCompat.getColor(context, R.color.white),
-                                ContextCompat.getColor(context, R.color.colorPrimary)
-                        )
+                    createInitialsDrawable(
+                        context.getString(
+                            R.string.customer_name_surname,
+                            customer.name,
+                            customer.surname
+                        ),
+                        ContextCompat.getColor(context, R.color.white),
+                        ContextCompat.getColor(context, R.color.colorPrimary)
+                    )
                 )
-                customerNameText.text = context.getString(R.string.customer_name_surname, customer.name, customer.surname)
+                customerNameText.text = context.getString(
+                    R.string.customer_name_surname,
+                    customer.name,
+                    customer.surname
+                )
 
                 if (customer.isLocal) {
                     customerPhoneNumberText.text = StringBuilder().append(customer.phone)
                     localeText.show()
                     localeImage.show()
                 } else {
-                    customerPhoneNumberText.text = context.getString(R.string.customer_id, customer.id.toString())
+                    customerPhoneNumberText.text =
+                        context.getString(R.string.customer_id, customer.id.toString())
                     localeText.gone()
                     localeImage.gone()
                 }

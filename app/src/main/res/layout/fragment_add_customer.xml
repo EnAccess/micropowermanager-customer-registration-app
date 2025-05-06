@@ -1,165 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray_EDEEF5">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_EDEEF5">
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="4dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="4dp">
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.inensus.android.base.view.default_input.DefaultInputView
+                        android:id="@+id/name"
+                        style="@style/DefaultInputView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:hint="@string/add_customer_name_hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="@string/add_customer_name_title" />
 
                     <com.inensus.android.base.view.default_input.DefaultInputView
-                            android:id="@+id/name"
-                            style="@style/DefaultInputView"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:hint="@string/add_customer_name_hint"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:title="@string/add_customer_name_title" />
+                        android:id="@+id/surname"
+                        style="@style/DefaultInputView"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:hint="@string/add_customer_surname_hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="@string/add_customer_surname_title" />
 
                     <com.inensus.android.base.view.default_input.DefaultInputView
-                            android:id="@+id/surname"
-                            style="@style/DefaultInputView"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:hint="@string/add_customer_surname_hint"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:title="@string/add_customer_surname_title" />
+                        android:id="@+id/phoneNumber"
+                        style="@style/DefaultInputView"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:hint="@string/add_customer_phone_number_hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="@string/add_customer_phone_number_title" />
 
                     <com.inensus.android.base.view.default_input.DefaultInputView
-                            android:id="@+id/phoneNumber"
-                            style="@style/DefaultInputView"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:hint="@string/add_customer_phone_number_hint"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:title="@string/add_customer_phone_number_title" />
-
-                    <com.inensus.android.base.view.default_input.DefaultInputView
-                            android:id="@+id/serialNumber"
-                            style="@style/DefaultInputView"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:hint="@string/add_customer_serial_number_hint"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:title="@string/add_customer_serial_number_title" />
+                        android:id="@+id/serialNumber"
+                        style="@style/DefaultInputView"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:hint="@string/add_customer_serial_number_hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:title="@string/add_customer_serial_number_title" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/manufacturerDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_manufacturer"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/manufacturerDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_manufacturer"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/meterTypeDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_meter_type"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/meterTypeDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_meter_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/tariffDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_tariff"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/tariffDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_tariff"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/cityDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_city"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/cityDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_city"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/connectionGroupDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_connection_group"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/connectionGroupDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_connection_group"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/connectionTypeDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            app:dropdown_input_title="@string/add_customer_connection_type"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/connectionTypeDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dropdown_input_title="@string/add_customer_connection_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.inensus.android.base.view.dropdown_input.DropdownInputView
-                            android:id="@+id/subConnectionTypeDropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_margin="8dp"
-                            app:dropdown_input_title="@string/add_customer_sub_connection_type"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/subConnectionTypeDropdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_margin="8dp"
+                        app:dropdown_input_title="@string/add_customer_sub_connection_type"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ProgressBar
-                            android:id="@+id/progressBar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:visibility="gone" />
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
