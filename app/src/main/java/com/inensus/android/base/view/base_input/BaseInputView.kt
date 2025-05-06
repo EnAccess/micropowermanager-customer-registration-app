@@ -90,7 +90,10 @@ abstract class BaseInputView(
             errorPopup?.let {
                 it.width = measuredWidth
                 it.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                postDelayed({ it.showAsDropDown(this, 0, 0, Gravity.BOTTOM) }, ERROR_POPUP_DELAY_IN_MILLIS)
+                postDelayed(
+                    { it.showAsDropDown(this, 0, 0, Gravity.BOTTOM) },
+                    ERROR_POPUP_DELAY_IN_MILLIS
+                )
             }
         }
     }

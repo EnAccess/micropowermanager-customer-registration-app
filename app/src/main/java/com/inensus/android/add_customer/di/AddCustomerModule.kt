@@ -20,5 +20,6 @@ object AddCustomerModule {
         single { AddCustomerRepository(get(), get(), get()) }
     }
 
-    private fun provideAddCustomerService(retrofitClient: Retrofit) = retrofitClient.create(AddCustomerService::class.java)
+    private fun provideAddCustomerService(retrofitClient: Retrofit) =
+        retrofitClient.create(AddCustomerService::class.java)
 }

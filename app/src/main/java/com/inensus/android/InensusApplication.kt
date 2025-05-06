@@ -26,15 +26,15 @@ class InensusApplication : Application() {
             androidLogger()
             androidContext(this@InensusApplication)
             modules(
-                    listOf(
-                            ApplicationModule.create(),
-                            CoreNetworkModule.create(),
-                            AuthNetworkModule.create(),
-                            NoAuthNetworkModule.create(),
-                            *LoginModule.create().toTypedArray(),
-                            *CustomerListModule.create().toTypedArray(),
-                            *AddCustomerModule.create().toTypedArray()
-                    )
+                listOf(
+                    ApplicationModule.create(),
+                    CoreNetworkModule.create(),
+                    AuthNetworkModule.create(),
+                    NoAuthNetworkModule.create(),
+                    *LoginModule.create().toTypedArray(),
+                    *CustomerListModule.create().toTypedArray(),
+                    *AddCustomerModule.create().toTypedArray()
+                )
             )
         }
     }

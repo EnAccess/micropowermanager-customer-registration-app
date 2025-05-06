@@ -22,7 +22,8 @@ import com.inensus.android.util.SharedPreferenceWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.bottomNavigation
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -61,19 +62,25 @@ class MainActivity : AppCompatActivity() {
         customerListFragment = CustomerListFragment.newInstance()
         addCustomerFragment = AddCustomerFragment.newInstance()
 
-        supportFragmentManager.beginTransaction().add(R.id.container, customerListFragment, "customerListFragment").commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, addCustomerFragment, "addCustomerFragment").hide(addCustomerFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, customerListFragment, "customerListFragment").commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, addCustomerFragment, "addCustomerFragment")
+            .hide(addCustomerFragment).commit()
     }
 
     private fun setupBottomNavigationView() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.customerList -> {
-                    supportFragmentManager.beginTransaction().hide(addCustomerFragment).show(customerListFragment).commitNow()
+                    supportFragmentManager.beginTransaction().hide(addCustomerFragment)
+                        .show(customerListFragment).commitNow()
                     customerListFragment.getCustomers()
                 }
+
                 R.id.addCustomer -> {
-                    supportFragmentManager.beginTransaction().hide(customerListFragment).show(addCustomerFragment).commitNow()
+                    supportFragmentManager.beginTransaction().hide(customerListFragment)
+                        .show(addCustomerFragment).commitNow()
                 }
             }
 
@@ -85,9 +92,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupConnectivitySnackBar() {
         snackBar = Snackbar.make(
-                findViewById(android.R.id.content),
-                getString(R.string.error_network_snackbar),
-                Snackbar.LENGTH_LONG
+            findViewById(android.R.id.content),
+            getString(R.string.error_network_snackbar),
+            Snackbar.LENGTH_LONG
         )
     }
 
@@ -103,9 +110,9 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(connectivityReceiver, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
 
         connectivityReceiver.observeNetworkStatusRelay()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::observeNetworkStatus, Timber::e)
-                .addTo(disposable)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::observeNetworkStatus, Timber::e)
+            .addTo(disposable)
     }
 
     private fun observeNetworkStatus(status: ConnectionChecker.NetworkStatus) {
@@ -130,15 +137,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         AlertDialog.Builder(this)
-                .setTitle(getString(R.string.warning))
-                .setCancelable(false)
-                .setMessage(getString(R.string.error_session_expired))
-                .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                    preferences.accessToken = ""
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
-                .show()
+            .setTitle(getString(R.string.warning))
+            .setCancelable(false)
+            .setMessage(getString(R.string.error_session_expired))
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                preferences.accessToken = ""
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+            .show()
     }
 
     override fun onBackPressed() {
@@ -163,20 +170,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
-            when (item.itemId) {
-                R.id.actionSync -> {
-                    handleNetworkStatus(connectionChecker.isOnline)
-                    customerListFragment.syncLocalStorage()
-                    true
-                }
-
-                R.id.actionCheck -> {
-                    addCustomerFragment.addCustomer()
-                    true
-                }
-
-                else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.actionSync -> {
+                handleNetworkStatus(connectionChecker.isOnline)
+                customerListFragment.syncLocalStorage()
+                true
             }
+
+            R.id.actionCheck -> {
+                addCustomerFragment.addCustomer()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
 
     override fun onDestroy() {
         disposable.clear()

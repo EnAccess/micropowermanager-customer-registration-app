@@ -9,7 +9,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.inensus.android.R
 import com.inensus.android.util.Constants
 import com.inensus.android.util.SharedPreferenceWrapper
-import kotlinx.android.synthetic.main.fragment_input_bottom_sheet.*
+import kotlinx.android.synthetic.main.fragment_input_bottom_sheet.inputView
+import kotlinx.android.synthetic.main.fragment_input_bottom_sheet.negativeButton
+import kotlinx.android.synthetic.main.fragment_input_bottom_sheet.positiveButton
 import org.koin.android.ext.android.inject
 
 class InputBottomSheetFragment : BottomSheetDialogFragment() {
@@ -19,13 +21,14 @@ class InputBottomSheetFragment : BottomSheetDialogFragment() {
     override fun getTheme() = R.style.AppTheme_BottomSheet
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val contextThemeWrapper = ContextThemeWrapper(activity, R.style.AppTheme)
 
-        return layoutInflater.cloneInContext(contextThemeWrapper).inflate(R.layout.fragment_input_bottom_sheet, container, false)
+        return layoutInflater.cloneInContext(contextThemeWrapper)
+            .inflate(R.layout.fragment_input_bottom_sheet, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

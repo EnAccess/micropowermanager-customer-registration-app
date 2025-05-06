@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import com.inensus.android.R
-import kotlinx.android.synthetic.main.view_text_input.view.*
+import kotlinx.android.synthetic.main.view_text_input.view.editText
+import kotlinx.android.synthetic.main.view_text_input.view.inputLayout
 
 class TextInputView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyle: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
 
     var text: String?
@@ -32,8 +33,12 @@ class TextInputView @JvmOverloads constructor(
         context.theme.obtainStyledAttributes(attrs, R.styleable.TextInputView, 0, 0).apply {
             try {
                 inputLayout.hint = getString(R.styleable.TextInputView_android_hint)
-                editText.inputType = getInt(R.styleable.TextInputView_android_inputType, EditorInfo.TYPE_CLASS_TEXT)
-                editText.imeOptions = getInt(R.styleable.TextInputView_android_imeOptions, EditorInfo.IME_ACTION_UNSPECIFIED)
+                editText.inputType =
+                    getInt(R.styleable.TextInputView_android_inputType, EditorInfo.TYPE_CLASS_TEXT)
+                editText.imeOptions = getInt(
+                    R.styleable.TextInputView_android_imeOptions,
+                    EditorInfo.IME_ACTION_UNSPECIFIED
+                )
                 val maxLength = getInt(R.styleable.TextInputView_android_maxLength, -1)
                 if (maxLength != -1) {
                     addInputFilter(InputFilter.LengthFilter(maxLength))

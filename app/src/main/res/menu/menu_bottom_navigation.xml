@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/customerList"
-            android:contentDescription="@string/customer_list"
-            android:icon="@drawable/user_list"
-            android:title="@string/customer_list" />
+        android:id="@+id/customerList"
+        android:contentDescription="@string/customer_list"
+        android:icon="@drawable/user_list"
+        android:title="@string/customer_list" />
     <item
-            android:id="@+id/addCustomer"
-            android:contentDescription="@string/add_customer"
-            android:icon="@drawable/add_user"
-            android:title="@string/add_customer" />
+        android:id="@+id/addCustomer"
+        android:contentDescription="@string/add_customer"
+        android:icon="@drawable/add_user"
+        android:title="@string/add_customer" />
 </menu>

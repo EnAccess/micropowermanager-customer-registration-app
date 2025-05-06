@@ -28,19 +28,19 @@ object CoreNetworkModule {
 
         factory { (interceptors: InterceptorsModel) ->
             provideOkHttp(
-                    interceptors = if (BuildConfig.DEBUG) {
-                        interceptors.interceptors + provideHttpLoggingInterceptor()
-                    } else {
-                        interceptors.interceptors
-                    },
-                    networkInterceptors = interceptors.networkInterceptors
+                interceptors = if (BuildConfig.DEBUG) {
+                    interceptors.interceptors + provideHttpLoggingInterceptor()
+                } else {
+                    interceptors.interceptors
+                },
+                networkInterceptors = interceptors.networkInterceptors
             )
         }
 
         factory(qualifier = Qualifiers.BASE_RETROFIT) { (interceptors: InterceptorsModel) ->
             provideRetrofit(
-                    okHttpClient = get(parameters = { parametersOf(interceptors) }),
-                    gson = get()
+                okHttpClient = get(parameters = { parametersOf(interceptors) }),
+                gson = get()
             )
         }
     }
@@ -53,7 +53,10 @@ object CoreNetworkModule {
             .baseUrl("http://localhost/api/")
             .build()
 
-    private fun provideOkHttp(interceptors: List<Interceptor>?, networkInterceptors: List<Interceptor>?): OkHttpClient =
+    private fun provideOkHttp(
+        interceptors: List<Interceptor>?,
+        networkInterceptors: List<Interceptor>?
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)

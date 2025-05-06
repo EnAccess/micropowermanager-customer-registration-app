@@ -73,13 +73,14 @@ fun Throwable.toServiceError(): ServiceError {
 }
 
 private fun parse(errorBody: String?): ServiceError =
-        try {
-            Gson().fromJson(errorBody, ServiceError::class.java)
-        } catch (e: Throwable) {
-            ServiceError(Error("An error occurred. Please try again later"))
-        }
+    try {
+        Gson().fromJson(errorBody, ServiceError::class.java)
+    } catch (e: Throwable) {
+        ServiceError(Error("An error occurred. Please try again later"))
+    }
 
-fun createInitialsDrawable(name: String, textColor: Int, backgroundColor: Int): TextDrawable = TextDrawable.builder()
+fun createInitialsDrawable(name: String, textColor: Int, backgroundColor: Int): TextDrawable =
+    TextDrawable.builder()
         .beginConfig()
         .fontSize(14.toPx())
         .useFont(Typeface.DEFAULT)

@@ -4,8 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-class TitleView(context: Context, attributeSet: AttributeSet) : AppCompatTextView(context, attributeSet),
-        ErrorState {
+class TitleView(context: Context, attributeSet: AttributeSet) :
+    AppCompatTextView(context, attributeSet),
+    ErrorState {
     private var errorState: Boolean = false
 
     override fun onCreateDrawableState(extraSpace: Int): IntArray =

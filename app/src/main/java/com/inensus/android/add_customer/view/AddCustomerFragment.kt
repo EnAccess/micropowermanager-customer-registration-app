@@ -46,7 +46,11 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     private var mLocation: Location? = null
     private var mLocationRequest: LocationRequest? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    )
             : View = inflater.inflate(R.layout.fragment_add_customer, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,7 +96,11 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 getLocation()
             } else {
                 checkLocationPermission()
@@ -102,7 +110,8 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         }
 
         if (isFormValid()) {
-            viewModel.addCustomerToDb(Customer(
+            viewModel.addCustomerToDb(
+                Customer(
                     name = name.getText(),
                     surname = surname.getText(),
                     phone = phoneNumber.getText(),
@@ -113,175 +122,180 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     city = viewModel.findCityByName(cityDropdown.value).id,
                     connectionGroup = viewModel.findConnectionGroupByValue(connectionGroupDropdown.value).id,
                     connectionType = viewModel.findConnectionTypeByValue(connectionTypeDropdown.value).id,
-                    subConnectionType = viewModel.findSubConnectionTypeByValue(subConnectionTypeDropdown.value).id,
+                    subConnectionType = viewModel.findSubConnectionTypeByValue(
+                        subConnectionTypeDropdown.value
+                    ).id,
                     geoPoints = geoPoints,
-                    isLocal = true))
+                    isLocal = true
+                )
+            )
 
             resetForm()
 
-            Toast.makeText(activity, "Data has been inserted into Local Storage", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Data has been inserted into Local Storage", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
     @SuppressLint("CheckResult")
     fun getManufacturers() {
         viewModel.getManufacturers()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.manufacturers = Gson().toJson(it)
-                                invalidateManufacturerSpinner(it)
-                            } else {
-                                invalidateManufacturerSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateManufacturerSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.manufacturers = Gson().toJson(it)
+                        invalidateManufacturerSpinner(it)
+                    } else {
+                        invalidateManufacturerSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateManufacturerSpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getMeterTypes() {
         viewModel.getMeterTypes()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.meterTypes = Gson().toJson(it)
-                                invalidateMeterTypeSpinner(it)
-                            } else {
-                                invalidateMeterTypeSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateMeterTypeSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.meterTypes = Gson().toJson(it)
+                        invalidateMeterTypeSpinner(it)
+                    } else {
+                        invalidateMeterTypeSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateMeterTypeSpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getTariffs() {
         viewModel.getTariffs()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.tariffs = Gson().toJson(it)
-                                invalidateTariffSpinner(it)
-                            } else {
-                                invalidateTariffSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateTariffSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.tariffs = Gson().toJson(it)
+                        invalidateTariffSpinner(it)
+                    } else {
+                        invalidateTariffSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateTariffSpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getCities() {
         viewModel.getCities()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.cities = Gson().toJson(it)
-                                invalidateCitySpinner(it)
-                            } else {
-                                invalidateCitySpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateCitySpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.cities = Gson().toJson(it)
+                        invalidateCitySpinner(it)
+                    } else {
+                        invalidateCitySpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateCitySpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getConnectionGroups() {
         viewModel.getConnectionGroups()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.connectionGroups = Gson().toJson(it)
-                                invalidateConnectionGroupSpinner(it)
-                            } else {
-                                invalidateConnectionGroupSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateConnectionGroupSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.connectionGroups = Gson().toJson(it)
+                        invalidateConnectionGroupSpinner(it)
+                    } else {
+                        invalidateConnectionGroupSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateConnectionGroupSpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getConnectionTypes() {
         viewModel.getConnectionTypes()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.connectionTypes = Gson().toJson(it)
-                                invalidateConnectionTypeSpinner(it)
-                            } else {
-                                invalidateConnectionTypeSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateConnectionTypeSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.connectionTypes = Gson().toJson(it)
+                        invalidateConnectionTypeSpinner(it)
+                    } else {
+                        invalidateConnectionTypeSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateConnectionTypeSpinner()
+                }
+            )
     }
 
     @SuppressLint("CheckResult")
     fun getSubConnectionTypes() {
         viewModel.getSubConnectionTypes()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showDialog() }
-                .subscribe(
-                        {
-                            hideDialog()
-                            if (it.isNotEmpty()) {
-                                preferences.subConnectionTypes = Gson().toJson(it)
-                                invalidateSubConnectionTypeSpinner(it)
-                            } else {
-                                invalidateSubConnectionTypeSpinner()
-                            }
-                        },
-                        {
-                            hideDialog()
-                            invalidateSubConnectionTypeSpinner()
-                        }
-                )
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showDialog() }
+            .subscribe(
+                {
+                    hideDialog()
+                    if (it.isNotEmpty()) {
+                        preferences.subConnectionTypes = Gson().toJson(it)
+                        invalidateSubConnectionTypeSpinner(it)
+                    } else {
+                        invalidateSubConnectionTypeSpinner()
+                    }
+                },
+                {
+                    hideDialog()
+                    invalidateSubConnectionTypeSpinner()
+                }
+            )
     }
 
     private fun invalidateManufacturerSpinner(manufacturers: List<Manufacturer> = listOf()) {
@@ -336,11 +350,12 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateConnectionGroupSpinner(connectionGroups: List<ConnectionGroup> = listOf()) {
         if (isAdded) {
-            val mutableConnectionGroups: MutableList<ConnectionGroup> = if (connectionGroups.isEmpty()) {
-                preferences.getConnectionGroups()
-            } else {
-                connectionGroups.toMutableList()
-            }
+            val mutableConnectionGroups: MutableList<ConnectionGroup> =
+                if (connectionGroups.isEmpty()) {
+                    preferences.getConnectionGroups()
+                } else {
+                    connectionGroups.toMutableList()
+                }
 
             connectionGroupDropdown.bindData(mutableConnectionGroups.map { it.name ?: "" })
         }
@@ -348,11 +363,12 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateConnectionTypeSpinner(connectionTypes: List<ConnectionType> = listOf()) {
         if (isAdded) {
-            val mutableConnectionTypes: MutableList<ConnectionType> = if (connectionTypes.isEmpty()) {
-                preferences.getConnectionTypes()
-            } else {
-                connectionTypes.toMutableList()
-            }
+            val mutableConnectionTypes: MutableList<ConnectionType> =
+                if (connectionTypes.isEmpty()) {
+                    preferences.getConnectionTypes()
+                } else {
+                    connectionTypes.toMutableList()
+                }
 
             connectionTypeDropdown.bindData(mutableConnectionTypes.map { it.name ?: "" })
         }
@@ -360,14 +376,19 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateSubConnectionTypeSpinner(subConnectionTypes: List<SubConnectionType> = listOf()) {
         if (isAdded) {
-            val mutableSubConnectionTypes: MutableList<SubConnectionType> = if (subConnectionTypes.isEmpty()) {
-                preferences.getSubConnectionTypes()
-            } else {
-                subConnectionTypes.toMutableList()
-            }
+            val mutableSubConnectionTypes: MutableList<SubConnectionType> =
+                if (subConnectionTypes.isEmpty()) {
+                    preferences.getSubConnectionTypes()
+                } else {
+                    subConnectionTypes.toMutableList()
+                }
 
             if (connectionTypeDropdown.value.isNotEmpty()) {
-                val filteredSubConnectionTypes = mutableSubConnectionTypes.filter { it.connectionTypeId == viewModel.findConnectionTypeByValue(connectionTypeDropdown.value).id }.map {
+                val filteredSubConnectionTypes = mutableSubConnectionTypes.filter {
+                    it.connectionTypeId == viewModel.findConnectionTypeByValue(
+                        connectionTypeDropdown.value
+                    ).id
+                }.map {
                     it.name ?: ""
                 }
 
@@ -463,7 +484,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         connectionGroupDropdown.value = preferences.getConnectionGroups().firstOrNull()?.name ?: ""
         connectionTypeDropdown.value = preferences.getConnectionTypes().firstOrNull()?.name ?: ""
         subConnectionTypeDropdown.value = preferences.getSubConnectionTypes().firstOrNull()?.name
-                ?: ""
+            ?: ""
 
         invalidateManufacturerSpinner()
         invalidateMeterTypeSpinner()
@@ -490,14 +511,25 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun startLocationUpdates() {
         mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(UPDATE_INTERVAL)
+            .setFastestInterval(FASTEST_INTERVAL)
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+            mGoogleApiClient,
+            mLocationRequest,
+            this
+        )
     }
 
     override fun onLocationChanged(p0: Location?) {
@@ -507,8 +539,8 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     @Synchronized
     private fun buildGoogleApiClient() {
         mGoogleApiClient = GoogleApiClient.Builder(requireContext())
-                .addApi(LocationServices.API)
-                .build()
+            .addApi(LocationServices.API)
+            .build()
 
         mGoogleApiClient!!.connect()
     }
@@ -522,44 +554,72 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     private fun showAlert() {
         val dialog = AlertDialog.Builder(requireContext())
         dialog.setTitle("Enable Location")
-                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " + "use this app")
-                .setPositiveButton("Location Settings") { _, _ ->
-                    val myIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    startActivity(myIntent)
-                }
-                .setNegativeButton("Cancel") { _, _ -> }
+            .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " + "use this app")
+            .setPositiveButton("Location Settings") { _, _ ->
+                val myIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(myIntent)
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
         dialog.show()
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     private fun checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
                 AlertDialog.Builder(requireContext())
-                        .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
-                        .setPositiveButton("OK") { _, _ ->
-                            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_CODE)
-                        }
-                        .create()
-                        .show()
+                    .setTitle("Location Permission Needed")
+                    .setMessage("This app needs the Location permission, please accept to use location functionality")
+                    .setPositiveButton("OK") { _, _ ->
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                            REQUEST_LOCATION_CODE
+                        )
+                    }
+                    .create()
+                    .show()
 
-            } else ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_CODE)
+            } else ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_CODE
+            )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             REQUEST_LOCATION_CODE -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_LONG).show()
+                    if (ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_LONG)
+                            .show()
                     }
                 } else {
                     // permission denied, boo! Disable the functionality that depends on this permission.

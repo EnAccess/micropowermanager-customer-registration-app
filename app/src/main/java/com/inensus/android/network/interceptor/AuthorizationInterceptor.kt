@@ -7,7 +7,10 @@ import com.inensus.android.util.SharedPreferenceWrapper
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthorizationInterceptor(private val context: Context, private val sharedPreferenceWrapper: SharedPreferenceWrapper) : Interceptor {
+class AuthorizationInterceptor(
+    private val context: Context,
+    private val sharedPreferenceWrapper: SharedPreferenceWrapper
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 

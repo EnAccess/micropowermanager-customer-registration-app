@@ -16,14 +16,17 @@ object AuthNetworkModule {
     fun create(): Module = module {
         single(qualifier = AuthQualifiers.AUTH_RETROFIT) {
             get<Retrofit>(
-                    qualifier = Qualifiers.BASE_RETROFIT,
-                    parameters = { parametersOf(provideInterceptors(get(), get())) }
+                qualifier = Qualifiers.BASE_RETROFIT,
+                parameters = { parametersOf(provideInterceptors(get(), get())) }
             )
         }
     }
 
-    private fun provideInterceptors(context: Context, sharedPreferenceWrapper: SharedPreferenceWrapper): InterceptorsModel = InterceptorsModel(
-            interceptors = listOf(AuthorizationInterceptor(context, sharedPreferenceWrapper)),
-            networkInterceptors = emptyList()
+    private fun provideInterceptors(
+        context: Context,
+        sharedPreferenceWrapper: SharedPreferenceWrapper
+    ): InterceptorsModel = InterceptorsModel(
+        interceptors = listOf(AuthorizationInterceptor(context, sharedPreferenceWrapper)),
+        networkInterceptors = emptyList()
     )
 }

@@ -14,15 +14,21 @@ import com.inensus.android.customer_list.model.Customer
 import com.inensus.android.customer_list.viewmodel.CustomerListViewModel
 import com.inensus.android.extensions.gone
 import com.inensus.android.extensions.show
-import kotlinx.android.synthetic.main.fragment_customer_list.*
+import kotlinx.android.synthetic.main.fragment_customer_list.llEmpty
+import kotlinx.android.synthetic.main.fragment_customer_list.rvCustomerList
+import kotlinx.android.synthetic.main.fragment_customer_list.swipeRefreshLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CustomerListFragment : BaseFragment() {
 
     private val viewModel: CustomerListViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_customer_list, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
+        inflater.inflate(R.layout.fragment_customer_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,12 +48,15 @@ class CustomerListFragment : BaseFragment() {
                 is CustomerListUiState.Success -> {
                     handleSuccessState(it.customers)
                 }
+
                 CustomerListUiState.Empty -> {
                     handleEmptyState()
                 }
+
                 CustomerListUiState.AddCustomerSuccess -> {
                     getCustomers()
                 }
+
                 is CustomerListUiState.AddCustomerError -> {
                     showCustomerAlertDialog(it.throwable, it.customer) {
                         viewModel.deleteCustomerFromLocalStorage(it.customer) {
@@ -90,7 +99,12 @@ class CustomerListFragment : BaseFragment() {
     }
 
     private fun setupSwipeRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(activity as Context, R.color.colorPrimaryDark))
+        swipeRefreshLayout.setColorSchemeColors(
+            ContextCompat.getColor(
+                activity as Context,
+                R.color.colorPrimaryDark
+            )
+        )
         swipeRefreshLayout.setOnRefreshListener { viewModel.getCustomers() }
     }
 
