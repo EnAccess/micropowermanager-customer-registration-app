@@ -1,0 +1,1 @@
+export JAVA_HOME=<copy from Android Studio Gradle JDK>

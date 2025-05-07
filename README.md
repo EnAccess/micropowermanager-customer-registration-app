@@ -42,6 +42,7 @@ This repository contains the source code for the [MicroPowerManager Customer Reg
 
 - Install [Android Studio](https://developer.android.com/studio)
 - Git clone the repository
+- (Optional, but recommended) Install [direnv](https://direnv.net/)
 
 ### Build the app
 
@@ -63,4 +64,18 @@ To build the app
 
   - If already installed, select **temurin-1.8** from the **Gradle JDK** dropdown
 
+- (Optional, but recommended) Copy `.envrc.sample` to `.envrc` and adjust `JAVA_HOME=` to match the Gradle JDK path from above.
 - Click **Sync Project with Gradle files**
+
+### Create a release APK locally
+
+To create a release APK locally
+
+1. Open a terminal and confirm `$JAVE_HOME` is set correctly.
+2. Run
+
+   ```sh
+   ./gradlew assembleRelease
+   ```
+
+3. The output APK will be located at `app/build/outputs/apk/release`
