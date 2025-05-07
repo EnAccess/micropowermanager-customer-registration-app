@@ -109,3 +109,9 @@ dependencies {
 
     implementation 'com.github.amulyakhare:textdrawable:558677e'
 }
+
+task printVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}

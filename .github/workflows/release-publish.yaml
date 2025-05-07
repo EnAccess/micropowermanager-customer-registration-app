@@ -29,8 +29,19 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
+      - name: Extract version and apk_name from `build.gradle`
+        id: version
+        run: |
+          VERSION="v$(./gradlew -q printVersionName)"
+          APK_NAME="micropowermanager-customer-registration-app-$VERSION-release.apk"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "apk_name=$APK_NAME" >> $GITHUB_OUTPUT
+
+      - name: Rename APK
+        run: mv app/build/outputs/apk/release/app-release.apk "${{ steps.version.outputs.apk_name }}"
+
       - name: Add APK to Github Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            app/build/outputs/apk/release/app-release.apk
+            ${{ steps.version.outputs.apk_name }}
