@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.application'
 
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+
+    // TBD: Deprecated
     id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
 }
 
 android {
@@ -110,7 +112,7 @@ dependencies {
     implementation 'com.github.amulyakhare:textdrawable:558677e'
 }
 
-task printVersionName {
+tasks.register('printVersionName') {
     doLast {
         println android.defaultConfig.versionName
     }
