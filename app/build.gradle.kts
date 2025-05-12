@@ -70,7 +70,7 @@ android {
 }
 
 val kotlin_version: String by rootProject.extra
-val koin_version = "2.2.2" // `2.2.3` requires Kotlin 1.5
+val koin_version = "2.2.3"
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
