@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace = "com.inensus.android"
     compileSdk = 29
 
     defaultConfig {
@@ -66,9 +67,9 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    lintOptions {
-        textReport = true
+    lint {
         textOutput = file("stdout")
+        textReport = true
     }
 
     buildFeatures {
