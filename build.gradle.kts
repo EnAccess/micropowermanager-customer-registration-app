@@ -10,10 +10,10 @@ plugins {
 
     id("com.android.application") version "4.2.2" apply false
 
-    id("org.jetbrains.kotlin.android") version "1.6.21" apply false
+    id("org.jetbrains.kotlin.android") version "1.5.32" apply false
 }
 
-extra["kotlin_version"] = "1.6.21"
+extra["kotlin_version"] = "1.5.32"
 extra["roomVersion"] = "1.1.1"
 extra["archLifecycleVersion"] = "1.1.1"
 
