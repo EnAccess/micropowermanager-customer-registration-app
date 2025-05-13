@@ -121,7 +121,7 @@ dependencies {
     implementation("io.insert-koin:koin-core-ext:$koin_version")
 
     // other
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("com.google.android.material:material:1.3.0-alpha02")
 
     implementation("com.github.amulyakhare:textdrawable:558677e")
