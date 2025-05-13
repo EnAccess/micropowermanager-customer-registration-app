@@ -16,18 +16,18 @@ import com.inensus.android.base.broadcast.ConnectivityBroadcastReceiver
 import com.inensus.android.base.broadcast.SessionExpireBroadcastReceiver
 import com.inensus.android.base.broadcast.SessionExpireBroadcastReceiver.Companion.SESSION_EXPIRE_INTENT_ACTION
 import com.inensus.android.customer_list.view.CustomerListFragment
+import com.inensus.android.databinding.ActivityMainBinding
 import com.inensus.android.login.view.LoginActivity
 import com.inensus.android.util.ConnectionChecker
 import com.inensus.android.util.SharedPreferenceWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.activity_main.bottomNavigation
-import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     private val preferences: SharedPreferenceWrapper by inject()
     private var mBackPressed: Long = 0
@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         registerSessionExpireReceiver()
         registerNetworkReceiver()
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationView() {
-        bottomNavigation.setOnNavigationItemSelectedListener {
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.customerList -> {
                     supportFragmentManager.beginTransaction().hide(addCustomerFragment)

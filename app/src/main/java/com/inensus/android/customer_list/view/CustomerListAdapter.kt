@@ -1,29 +1,26 @@
 package com.inensus.android.customer_list.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.inensus.android.R
 import com.inensus.android.customer_list.model.Customer
+import com.inensus.android.databinding.ListItemCustomerBinding
 import com.inensus.android.extensions.createInitialsDrawable
 import com.inensus.android.extensions.gone
 import com.inensus.android.extensions.show
-import kotlinx.android.synthetic.main.list_item_customer.view.customerImage
-import kotlinx.android.synthetic.main.list_item_customer.view.customerNameText
-import kotlinx.android.synthetic.main.list_item_customer.view.customerPhoneNumberText
-import kotlinx.android.synthetic.main.list_item_customer.view.localeImage
-import kotlinx.android.synthetic.main.list_item_customer.view.localeText
 
 class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>() {
 
     lateinit var onItemClick: ((customer: Customer) -> Unit)
     var customers: List<Customer> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.list_item_customer, parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding =
+            ListItemCustomerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(customers[position])
@@ -31,9 +28,12 @@ class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>
 
     override fun getItemCount() = customers.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val binding: ListItemCustomerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(customer: Customer) {
-            with(itemView) {
+            with(binding) {
+                val context = root.context
                 customerImage.setImageDrawable(
                     createInitialsDrawable(
                         context.getString(
@@ -62,7 +62,7 @@ class CustomerListAdapter : RecyclerView.Adapter<CustomerListAdapter.ViewHolder>
                     localeImage.gone()
                 }
 
-                setOnClickListener {
+                root.setOnClickListener {
                     if (customer.isLocal) {
                         onItemClick.invoke(customer)
                     }

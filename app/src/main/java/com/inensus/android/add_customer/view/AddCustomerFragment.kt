@@ -22,21 +22,23 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
-import com.inensus.android.R
 import com.inensus.android.add_customer.model.*
 import com.inensus.android.add_customer.viewmodel.AddCustomerViewModel
 import com.inensus.android.base.view.BaseFragment
 import com.inensus.android.customer_list.model.Customer
+import com.inensus.android.databinding.FragmentAddCustomerBinding
 import com.inensus.android.util.ConnectionChecker
 import com.inensus.android.util.SharedPreferenceWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.fragment_add_customer.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.LocationListener {
 
     private val viewModel: AddCustomerViewModel by viewModel()
+    private var _binding: FragmentAddCustomerBinding? = null
+    private val binding get() = _binding!!
+
     private val preferences: SharedPreferenceWrapper by inject()
     private val connectionChecker: ConnectionChecker by inject()
 
@@ -50,8 +52,10 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    )
-            : View = inflater.inflate(R.layout.fragment_add_customer, container, false)
+    ): View {
+        _binding = FragmentAddCustomerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,11 +78,11 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
             invalidateSubConnectionTypeSpinner()
         }
 
-        with(serialNumber.getMainTextView()) {
+        with(binding.serialNumber.getMainTextView()) {
             inputType = InputType.TYPE_CLASS_NUMBER
         }
 
-        connectionTypeDropdown.onValueChanged = {
+        binding.connectionTypeDropdown.onValueChanged = {
             invalidateSubConnectionTypeSpinner()
         }
     }
@@ -112,18 +116,18 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         if (isFormValid()) {
             viewModel.addCustomerToDb(
                 Customer(
-                    name = name.getText(),
-                    surname = surname.getText(),
-                    phone = phoneNumber.getText(),
-                    serialNumber = serialNumber.getText(),
-                    manufacturer = viewModel.findManufacturerByValue(manufacturerDropdown.value).id,
-                    meterType = viewModel.findMeterTypeByValue(meterTypeDropdown.value).id,
-                    tariff = viewModel.findTariffByName(tariffDropdown.value).id,
-                    city = viewModel.findCityByName(cityDropdown.value).id,
-                    connectionGroup = viewModel.findConnectionGroupByValue(connectionGroupDropdown.value).id,
-                    connectionType = viewModel.findConnectionTypeByValue(connectionTypeDropdown.value).id,
+                    name = binding.name.getText(),
+                    surname = binding.surname.getText(),
+                    phone = binding.phoneNumber.getText(),
+                    serialNumber = binding.serialNumber.getText(),
+                    manufacturer = viewModel.findManufacturerByValue(binding.manufacturerDropdown.value).id,
+                    meterType = viewModel.findMeterTypeByValue(binding.meterTypeDropdown.value).id,
+                    tariff = viewModel.findTariffByName(binding.tariffDropdown.value).id,
+                    city = viewModel.findCityByName(binding.cityDropdown.value).id,
+                    connectionGroup = viewModel.findConnectionGroupByValue(binding.connectionGroupDropdown.value).id,
+                    connectionType = viewModel.findConnectionTypeByValue(binding.connectionTypeDropdown.value).id,
                     subConnectionType = viewModel.findSubConnectionTypeByValue(
-                        subConnectionTypeDropdown.value
+                        binding.subConnectionTypeDropdown.value
                     ).id,
                     geoPoints = geoPoints,
                     isLocal = true
@@ -306,7 +310,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 manufacturers.toMutableList()
             }
 
-            manufacturerDropdown.bindData(mutableManufacturers.map { it.name ?: "" })
+            binding.manufacturerDropdown.bindData(mutableManufacturers.map { it.name ?: "" })
         }
     }
 
@@ -319,7 +323,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
             }
 
             if (mutableMeterTypes.isNotEmpty()) {
-                meterTypeDropdown.bindData(mutableMeterTypes.map { it.toString() })
+                binding.meterTypeDropdown.bindData(mutableMeterTypes.map { it.toString() })
             }
         }
     }
@@ -332,7 +336,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 tariffs.toMutableList()
             }
 
-            tariffDropdown.bindData(mutableTariffs.map { it.name ?: "" })
+            binding.tariffDropdown.bindData(mutableTariffs.map { it.name ?: "" })
         }
     }
 
@@ -344,7 +348,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 cities.toMutableList()
             }
 
-            cityDropdown.bindData(mutableCities.map { it.name ?: "" })
+            binding.cityDropdown.bindData(mutableCities.map { it.name ?: "" })
         }
     }
 
@@ -357,7 +361,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     connectionGroups.toMutableList()
                 }
 
-            connectionGroupDropdown.bindData(mutableConnectionGroups.map { it.name ?: "" })
+            binding.connectionGroupDropdown.bindData(mutableConnectionGroups.map { it.name ?: "" })
         }
     }
 
@@ -370,7 +374,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     connectionTypes.toMutableList()
                 }
 
-            connectionTypeDropdown.bindData(mutableConnectionTypes.map { it.name ?: "" })
+            binding.connectionTypeDropdown.bindData(mutableConnectionTypes.map { it.name ?: "" })
         }
     }
 
@@ -383,83 +387,83 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     subConnectionTypes.toMutableList()
                 }
 
-            if (connectionTypeDropdown.value.isNotEmpty()) {
+            if (binding.connectionTypeDropdown.value.isNotEmpty()) {
                 val filteredSubConnectionTypes = mutableSubConnectionTypes.filter {
                     it.connectionTypeId == viewModel.findConnectionTypeByValue(
-                        connectionTypeDropdown.value
+                        binding.connectionTypeDropdown.value
                     ).id
                 }.map {
                     it.name ?: ""
                 }
 
-                subConnectionTypeDropdown.bindData(filteredSubConnectionTypes)
+                binding.subConnectionTypeDropdown.bindData(filteredSubConnectionTypes)
             }
         }
     }
 
     private fun showDialog() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideDialog() {
-        progressBar.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
     }
 
     private fun isFormValid(): Boolean {
         var isValid = true
 
-        if (name.getText().isEmpty()) {
-            name.setErrorState(true)
+        if (binding.name.getText().isEmpty()) {
+            binding.name.setErrorState(true)
             isValid = false
         }
 
-        if (surname.getText().isEmpty()) {
-            surname.setErrorState(true)
+        if (binding.surname.getText().isEmpty()) {
+            binding.surname.setErrorState(true)
             isValid = false
         }
 
-        if (phoneNumber.getText().isEmpty()) {
-            phoneNumber.setErrorState(true)
+        if (binding.phoneNumber.getText().isEmpty()) {
+            binding.phoneNumber.setErrorState(true)
             isValid = false
         }
 
-        if (serialNumber.getText().isEmpty()) {
-            serialNumber.setErrorState(true)
+        if (binding.serialNumber.getText().isEmpty()) {
+            binding.serialNumber.setErrorState(true)
             isValid = false
         }
 
-        if (manufacturerDropdown.value.isEmpty()) {
-            manufacturerDropdown.setErrorState(true)
+        if (binding.manufacturerDropdown.value.isEmpty()) {
+            binding.manufacturerDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (meterTypeDropdown.value.isEmpty()) {
-            meterTypeDropdown.setErrorState(true)
+        if (binding.meterTypeDropdown.value.isEmpty()) {
+            binding.meterTypeDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (tariffDropdown.value.isEmpty()) {
-            tariffDropdown.setErrorState(true)
+        if (binding.tariffDropdown.value.isEmpty()) {
+            binding.tariffDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (cityDropdown.value.isEmpty()) {
-            cityDropdown.setErrorState(true)
+        if (binding.cityDropdown.value.isEmpty()) {
+            binding.cityDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (connectionGroupDropdown.value.isEmpty()) {
-            connectionGroupDropdown.setErrorState(true)
+        if (binding.connectionGroupDropdown.value.isEmpty()) {
+            binding.connectionGroupDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (connectionTypeDropdown.value.isEmpty()) {
-            connectionTypeDropdown.setErrorState(true)
+        if (binding.connectionTypeDropdown.value.isEmpty()) {
+            binding.connectionTypeDropdown.setErrorState(true)
             isValid = false
         }
 
-        if (subConnectionTypeDropdown.value.isEmpty()) {
-            subConnectionTypeDropdown.setErrorState(true)
+        if (binding.subConnectionTypeDropdown.value.isEmpty()) {
+            binding.subConnectionTypeDropdown.setErrorState(true)
             isValid = false
         }
 
@@ -472,19 +476,24 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     }
 
     private fun resetForm() {
-        name.setText("")
-        surname.setText("")
-        phoneNumber.setText("")
-        serialNumber.setText("")
+        binding.name.setText("")
+        binding.surname.setText("")
+        binding.phoneNumber.setText("")
+        binding.serialNumber.setText("")
 
-        manufacturerDropdown.value = preferences.getManufacturers().firstOrNull()?.name ?: ""
-        meterTypeDropdown.value = preferences.getMeterTypes().firstOrNull()?.toString() ?: ""
-        tariffDropdown.value = preferences.getTariffs().firstOrNull()?.name ?: ""
-        cityDropdown.value = preferences.getCities().firstOrNull()?.name ?: ""
-        connectionGroupDropdown.value = preferences.getConnectionGroups().firstOrNull()?.name ?: ""
-        connectionTypeDropdown.value = preferences.getConnectionTypes().firstOrNull()?.name ?: ""
-        subConnectionTypeDropdown.value = preferences.getSubConnectionTypes().firstOrNull()?.name
-            ?: ""
+        binding.manufacturerDropdown.value =
+            preferences.getManufacturers().firstOrNull()?.name ?: ""
+        binding.meterTypeDropdown.value =
+            preferences.getMeterTypes().firstOrNull()?.toString() ?: ""
+        binding.tariffDropdown.value = preferences.getTariffs().firstOrNull()?.name ?: ""
+        binding.cityDropdown.value = preferences.getCities().firstOrNull()?.name ?: ""
+        binding.connectionGroupDropdown.value =
+            preferences.getConnectionGroups().firstOrNull()?.name ?: ""
+        binding.connectionTypeDropdown.value =
+            preferences.getConnectionTypes().firstOrNull()?.name ?: ""
+        binding.subConnectionTypeDropdown.value =
+            preferences.getSubConnectionTypes().firstOrNull()?.name
+                ?: ""
 
         invalidateManufacturerSpinner()
         invalidateMeterTypeSpinner()

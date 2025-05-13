@@ -10,22 +10,24 @@ import androidx.lifecycle.Observer
 import com.inensus.android.R
 import com.inensus.android.base.view.BaseFragment
 import com.inensus.android.base.view.InputBottomSheetFragment
+import com.inensus.android.databinding.FragmentLoginBinding
 import com.inensus.android.login.viewmodel.LoginViewModel
 import com.inensus.android.main.MainActivity
-import kotlinx.android.synthetic.main.fragment_login.emailInput
-import kotlinx.android.synthetic.main.fragment_login.forgotPasswordText
-import kotlinx.android.synthetic.main.fragment_login.loginButton
-import kotlinx.android.synthetic.main.fragment_login.passwordInput
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModel()
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,24 +57,24 @@ class LoginFragment : BaseFragment() {
         })
 
         viewModel.email.observe(viewLifecycleOwner, Observer {
-            if (emailInput.getText() != it) {
-                emailInput.setText(it)
+            if (binding.emailInput.getText() != it) {
+                binding.emailInput.setText(it)
             }
         })
 
         viewModel.password.observe(viewLifecycleOwner, Observer {
-            if (passwordInput.getText() != it) {
-                passwordInput.setText(it)
+            if (binding.passwordInput.getText() != it) {
+                binding.passwordInput.setText(it)
             }
         })
     }
 
     private fun setupListeners() {
-        emailInput.afterTextChanged = { viewModel.onEmailChanged(it.toString()) }
-        passwordInput.afterTextChanged = { viewModel.onPasswordChanged(it.toString()) }
-        loginButton.setOnClickListener { viewModel.onLoginButtonTapped() }
+        binding.emailInput.afterTextChanged = { viewModel.onEmailChanged(it.toString()) }
+        binding.passwordInput.afterTextChanged = { viewModel.onPasswordChanged(it.toString()) }
+        binding.loginButton.setOnClickListener { viewModel.onLoginButtonTapped() }
 
-        forgotPasswordText.setOnClickListener {
+        binding.forgotPasswordText.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle(getString(R.string.warning))
                 .setCancelable(false)
@@ -93,11 +95,11 @@ class LoginFragment : BaseFragment() {
             when (validationError) {
                 is LoginUiState.ValidationError.Error.EmailIsBlank,
                 is LoginUiState.ValidationError.Error.EmailIsNotInCorrectFormat -> {
-                    emailInput.setErrorState(true)
+                    binding.emailInput.setErrorState(true)
                 }
 
                 is LoginUiState.ValidationError.Error.PasswordIsBlank -> {
-                    passwordInput.setErrorState(true)
+                    binding.passwordInput.setErrorState(true)
                 }
             }
         }
