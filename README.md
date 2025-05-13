@@ -62,7 +62,7 @@ To build the app
 
     ![Android Studio JetBrains Runtime](docs/images/android-studio-jetbrains-11.png)
 
-    > ![NOTE]
+    > [!NOTE]
     > For ideal performance be sure to select the correct architecture.
     > For example for users of Mac's with M-chips select `aarch64`.
 
