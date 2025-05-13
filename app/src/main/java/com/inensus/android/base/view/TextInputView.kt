@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import com.inensus.android.R
-import kotlinx.android.synthetic.main.view_text_input.view.editText
-import kotlinx.android.synthetic.main.view_text_input.view.inputLayout
+import com.inensus.android.databinding.ViewTextInputBinding
 
 class TextInputView @JvmOverloads constructor(
     context: Context,
@@ -16,26 +15,28 @@ class TextInputView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
 
+    private lateinit var binding: ViewTextInputBinding
+
     var text: String?
-        get() = editText.text.toString()
-        set(value) = editText.setText(value)
+        get() = binding.editText.text.toString()
+        set(value) = binding.editText.setText(value)
 
     private fun addInputFilter(inputFilter: InputFilter) {
-        editText.filters = editText.filters.plus(inputFilter)
+        binding.editText.filters = binding.editText.filters.plus(inputFilter)
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_text_input, this, true)
+        binding = ViewTextInputBinding.inflate(LayoutInflater.from(context), this, true)
         extractAttributes(context, attrs)
     }
 
     private fun extractAttributes(context: Context, attrs: AttributeSet?) {
         context.theme.obtainStyledAttributes(attrs, R.styleable.TextInputView, 0, 0).apply {
             try {
-                inputLayout.hint = getString(R.styleable.TextInputView_android_hint)
-                editText.inputType =
+                binding.inputLayout.hint = getString(R.styleable.TextInputView_android_hint)
+                binding.editText.inputType =
                     getInt(R.styleable.TextInputView_android_inputType, EditorInfo.TYPE_CLASS_TEXT)
-                editText.imeOptions = getInt(
+                binding.editText.imeOptions = getInt(
                     R.styleable.TextInputView_android_imeOptions,
                     EditorInfo.IME_ACTION_UNSPECIFIED
                 )

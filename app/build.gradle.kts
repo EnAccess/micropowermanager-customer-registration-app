@@ -3,9 +3,6 @@ plugins {
 
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
-
-    // TBD: Deprecated
-    id("kotlin-android-extensions")
 }
 
 android {
@@ -72,6 +69,10 @@ android {
     lintOptions {
         textReport = true
         textOutput = file("stdout")
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 

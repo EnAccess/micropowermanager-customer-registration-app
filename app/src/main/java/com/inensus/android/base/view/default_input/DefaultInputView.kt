@@ -7,19 +7,19 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
-import com.inensus.android.R
 import com.inensus.android.base.view.base_input.BaseInputView
 import com.inensus.android.base.view.base_input.BorderView
 import com.inensus.android.base.view.base_input.ErrorState
+import com.inensus.android.databinding.ViewDefaultInputBinding
 import com.inensus.android.extensions.afterTextChanged
-import kotlinx.android.synthetic.main.view_default_input.view.*
 
 open class DefaultInputView(context: Context, attrs: AttributeSet) : BaseInputView(context, attrs) {
+    protected lateinit var binding: ViewDefaultInputBinding
 
     var afterTextChanged: ((editable: Editable) -> Unit)? = null
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_default_input, this, true)
+        binding = ViewDefaultInputBinding.inflate(LayoutInflater.from(context), this)
     }
 
     override fun onFinishInflate() {
@@ -36,28 +36,28 @@ open class DefaultInputView(context: Context, attrs: AttributeSet) : BaseInputVi
             super.onCreateDrawableState(extraSpace)
         }
 
-    override fun getTitleView(): TextView = titleText
+    override fun getTitleView(): TextView = binding.titleText
 
-    override fun getMainTextView(): AppCompatEditText = editText
+    override fun getMainTextView(): AppCompatEditText = binding.editText
 
-    override fun getIcon(): AppCompatImageView = icon
+    override fun getIcon(): AppCompatImageView = binding.icon
 
-    override fun getBorderView(): BorderView = border
+    override fun getBorderView(): BorderView = binding.border
 
     fun setText(text: String) {
-        editText.setText(text)
+        binding.editText.setText(text)
     }
 
-    fun getText() = editText.text.toString()
+    fun getText() = binding.editText.text.toString()
 
     open fun setupView() {
         setOnClickListener {
-            if (isEnabled) editText.requestFocus()
+            if (isEnabled) binding.editText.requestFocus()
         }
 
-        editText.setOnFocusChangeListener { _, focus -> onFocusChanged(focus) }
+        binding.editText.setOnFocusChangeListener { _, focus -> onFocusChanged(focus) }
 
-        editText.afterTextChanged {
+        binding.editText.afterTextChanged {
             afterTextChanged?.invoke(it)
             setErrorState(false)
         }

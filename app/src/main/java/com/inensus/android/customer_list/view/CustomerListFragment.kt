@@ -12,23 +12,25 @@ import com.inensus.android.R
 import com.inensus.android.base.view.BaseFragment
 import com.inensus.android.customer_list.model.Customer
 import com.inensus.android.customer_list.viewmodel.CustomerListViewModel
+import com.inensus.android.databinding.FragmentCustomerListBinding
 import com.inensus.android.extensions.gone
 import com.inensus.android.extensions.show
-import kotlinx.android.synthetic.main.fragment_customer_list.llEmpty
-import kotlinx.android.synthetic.main.fragment_customer_list.rvCustomerList
-import kotlinx.android.synthetic.main.fragment_customer_list.swipeRefreshLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CustomerListFragment : BaseFragment() {
 
     private val viewModel: CustomerListViewModel by viewModel()
+    private var _binding: FragmentCustomerListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_customer_list, container, false)
+    ): View {
+        _binding = FragmentCustomerListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,22 +71,22 @@ class CustomerListFragment : BaseFragment() {
     }
 
     private fun handleSuccessState(customers: List<Customer>) {
-        rvCustomerList.adapter.apply {
+        binding.rvCustomerList.adapter.apply {
             (this as CustomerListAdapter).customers = customers
             notifyDataSetChanged()
         }
 
         stopSwipeRefresh()
-        llEmpty.gone()
+        binding.llEmpty.gone()
     }
 
     private fun handleEmptyState() {
         stopSwipeRefresh()
-        llEmpty.show()
+        binding.llEmpty.show()
     }
 
     private fun setupRecyclerView() {
-        rvCustomerList.apply {
+        binding.rvCustomerList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = CustomerListAdapter().apply {
                 onItemClick = {
@@ -99,13 +101,13 @@ class CustomerListFragment : BaseFragment() {
     }
 
     private fun setupSwipeRefreshLayout() {
-        swipeRefreshLayout.setColorSchemeColors(
+        binding.swipeRefreshLayout.setColorSchemeColors(
             ContextCompat.getColor(
                 activity as Context,
                 R.color.colorPrimaryDark
             )
         )
-        swipeRefreshLayout.setOnRefreshListener { viewModel.getCustomers() }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getCustomers() }
     }
 
     fun getCustomers() {
@@ -117,7 +119,7 @@ class CustomerListFragment : BaseFragment() {
     }
 
     private fun stopSwipeRefresh() {
-        swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     override fun provideViewModel() = viewModel
