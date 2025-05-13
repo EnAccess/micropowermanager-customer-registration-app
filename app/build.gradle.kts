@@ -54,13 +54,19 @@ android {
         mapDiagnosticLocations = true
     }
 
+    // Setting this to `VERSION_11` yields:
+    // error: cannot find symbol
+    //                   + " Found:\n" + _existingCustomers);
+    //                                   ^
+    //   symbol:   method makeConcatWithConstants(Lookup,String,MethodType,String)
+    //   location: interface StringConcatFactory
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     lintOptions {
@@ -71,6 +77,7 @@ android {
 
 val kotlin_version: String by rootProject.extra
 val koin_version = "2.2.3"
+val room_version = "2.2.5"
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -95,11 +102,11 @@ dependencies {
     implementation("androidx.core:core-ktx:1.5.0-alpha02")
 
     // Room components
-    implementation("androidx.room:room-runtime:2.2.5")
-    kapt("androidx.room:room-compiler:2.2.5")
-    kapt("androidx.room:room-rxjava2:2.2.5")
-    implementation("androidx.room:room-rxjava2:2.2.5")
-    androidTestImplementation("androidx.room:room-testing:2.2.5")
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-rxjava2:$room_version")
+    implementation("androidx.room:room-rxjava2:$room_version")
+    androidTestImplementation("androidx.room:room-testing:$room_version")
 
     // Lifecycle components
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -116,6 +123,14 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0-alpha02")
 
     implementation("com.github.amulyakhare:textdrawable:558677e")
+}
+
+// Temporary workaround to build on M1 Mac's
+// Can be fixed by updating room to 2.4
+configurations.all {
+    resolutionStrategy {
+        force("org.xerial:sqlite-jdbc:3.34.0")
+    }
 }
 
 tasks.register("printVersionName") {
