@@ -1,3 +1,5 @@
 # .git-blame-ignore-revs
 # Apply code style (#29)
 c5115d88f2e2401d8263b2c270d01be15b623f2a
+# Fix `ktlint` errors
+dc562df6c1c816b22fd5318934ec2d43cc194d64
