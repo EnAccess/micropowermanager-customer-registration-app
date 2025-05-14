@@ -8,7 +8,9 @@ import android.view.MotionEvent
 import android.widget.PopupWindow
 import com.inensus.android.databinding.ErrorPopupLayoutBinding
 
-class ErrorPopup(context: Context) : PopupWindow() {
+class ErrorPopup(
+    context: Context,
+) : PopupWindow() {
     private lateinit var binding: ErrorPopupLayoutBinding
 
     init {

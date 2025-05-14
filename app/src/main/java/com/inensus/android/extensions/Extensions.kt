@@ -26,19 +26,31 @@ fun EditText.requestFocusWithKeyboard() {
 }
 
 fun EditText.afterTextChanged(afterTextChanged: (Editable) -> Unit) {
-    this.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
-
-        override fun afterTextChanged(editable: Editable?) {
-            editable?.run {
-                afterTextChanged.invoke(this)
+    this.addTextChangedListener(
+        object : TextWatcher {
+            override fun beforeTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int,
+            ) {
             }
-        }
-    })
+
+            override fun onTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int,
+            ) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editable?.run {
+                    afterTextChanged.invoke(this)
+                }
+            }
+        },
+    )
 }
 
 fun ViewGroup.setEnabledWithChildren(isEnabled: Boolean) {
@@ -64,13 +76,12 @@ fun View.gone() {
     visibility = View.GONE
 }
 
-fun Throwable.toServiceError(): ServiceError {
-    return when (this) {
+fun Throwable.toServiceError(): ServiceError =
+    when (this) {
         is HttpException -> parse(response()?.errorBody()?.string())
         is SocketTimeoutException -> ServiceError(Error("Request has been timed out. Please check your connection and try again"))
         else -> ServiceError(Error("An error occurred. Please try again later"))
     }
-}
 
 private fun parse(errorBody: String?): ServiceError =
     try {
@@ -79,8 +90,13 @@ private fun parse(errorBody: String?): ServiceError =
         ServiceError(Error("An error occurred. Please try again later"))
     }
 
-fun createInitialsDrawable(name: String, textColor: Int, backgroundColor: Int): TextDrawable =
-    TextDrawable.builder()
+fun createInitialsDrawable(
+    name: String,
+    textColor: Int,
+    backgroundColor: Int,
+): TextDrawable =
+    TextDrawable
+        .builder()
         .beginConfig()
         .fontSize(14.toPx())
         .useFont(Typeface.DEFAULT)
@@ -89,7 +105,12 @@ fun createInitialsDrawable(name: String, textColor: Int, backgroundColor: Int): 
         .buildRound(extractUserInitials(name), backgroundColor)
 
 private fun extractUserInitials(text: String): String {
-    val sequence = text.split(" ").take(2).filterNot { it.isEmpty() }.map { it.first().toString() }
+    val sequence =
+        text
+            .split(" ")
+            .take(2)
+            .filterNot { it.isEmpty() }
+            .map { it.first().toString() }
     return when {
         sequence.isEmpty() -> ""
         sequence.size == 1 -> sequence[0]

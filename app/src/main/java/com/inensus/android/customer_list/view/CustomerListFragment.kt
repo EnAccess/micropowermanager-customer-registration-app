@@ -18,21 +18,25 @@ import com.inensus.android.extensions.show
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CustomerListFragment : BaseFragment() {
-
     private val viewModel: CustomerListViewModel by viewModel()
+
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentCustomerListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentCustomerListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupView()
@@ -45,29 +49,32 @@ class CustomerListFragment : BaseFragment() {
     }
 
     private fun observeUiState() {
-        viewModel.uiState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is CustomerListUiState.Success -> {
-                    handleSuccessState(it.customers)
-                }
+        viewModel.uiState.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is CustomerListUiState.Success -> {
+                        handleSuccessState(it.customers)
+                    }
 
-                CustomerListUiState.Empty -> {
-                    handleEmptyState()
-                }
+                    CustomerListUiState.Empty -> {
+                        handleEmptyState()
+                    }
 
-                CustomerListUiState.AddCustomerSuccess -> {
-                    getCustomers()
-                }
+                    CustomerListUiState.AddCustomerSuccess -> {
+                        getCustomers()
+                    }
 
-                is CustomerListUiState.AddCustomerError -> {
-                    showCustomerAlertDialog(it.throwable, it.customer) {
-                        viewModel.deleteCustomerFromLocalStorage(it.customer) {
-                            viewModel.getCustomers()
+                    is CustomerListUiState.AddCustomerError -> {
+                        showCustomerAlertDialog(it.throwable, it.customer) {
+                            viewModel.deleteCustomerFromLocalStorage(it.customer) {
+                                viewModel.getCustomers()
+                            }
                         }
                     }
                 }
-            }
-        })
+            },
+        )
     }
 
     private fun handleSuccessState(customers: List<Customer>) {
@@ -88,15 +95,16 @@ class CustomerListFragment : BaseFragment() {
     private fun setupRecyclerView() {
         binding.rvCustomerList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CustomerListAdapter().apply {
-                onItemClick = {
-                    showWarningDialog(getString(R.string.delete_customer)) {
-                        viewModel.deleteCustomerFromLocalStorage(it) {
-                            viewModel.getCustomers()
+            adapter =
+                CustomerListAdapter().apply {
+                    onItemClick = {
+                        showWarningDialog(getString(R.string.delete_customer)) {
+                            viewModel.deleteCustomerFromLocalStorage(it) {
+                                viewModel.getCustomers()
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
@@ -104,8 +112,8 @@ class CustomerListFragment : BaseFragment() {
         binding.swipeRefreshLayout.setColorSchemeColors(
             ContextCompat.getColor(
                 activity as Context,
-                R.color.colorPrimaryDark
-            )
+                R.color.colorPrimaryDark,
+            ),
         )
         binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getCustomers() }
     }

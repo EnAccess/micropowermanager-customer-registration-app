@@ -6,6 +6,5 @@ import com.google.gson.FieldAttributes
 class ExclusionGsonStrategy : ExclusionStrategy {
     override fun shouldSkipClass(clazz: Class<*>?) = false
 
-    override fun shouldSkipField(f: FieldAttributes) =
-        f.getAnnotation(Exclude::class.java) != null
+    override fun shouldSkipField(f: FieldAttributes) = f.getAnnotation(Exclude::class.java) != null
 }

@@ -17,9 +17,13 @@ import java.net.UnknownHostException
 
 abstract class BaseFragment : Fragment() {
     abstract fun provideViewModel(): BaseViewModel
+
     private var progressDialog: AlertDialog? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         observeLoading()
@@ -27,28 +31,39 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun observeLoading() {
-        provideViewModel().loading.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                showLoading()
-            } else {
-                hideLoading()
-            }
-        })
+        provideViewModel().loading.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    showLoading()
+                } else {
+                    hideLoading()
+                }
+            },
+        )
     }
 
     private fun observeError() {
-        provideViewModel().error.observe(viewLifecycleOwner, Observer {
-            AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.error))
-                .setMessage(it.error?.message ?: "An error occurred. Please try again later")
-                .setPositiveButton(getString(R.string.ok)) { _, _ -> }
-                .show()
-        })
+        provideViewModel().error.observe(
+            viewLifecycleOwner,
+            Observer {
+                AlertDialog
+                    .Builder(requireContext())
+                    .setTitle(getString(R.string.error))
+                    .setMessage(it.error?.message ?: "An error occurred. Please try again later")
+                    .setPositiveButton(getString(R.string.ok)) { _, _ -> }
+                    .show()
+            },
+        )
     }
 
-    fun showWarningDialog(message: String?, callback: (() -> Unit)? = null): AlertDialog? =
+    fun showWarningDialog(
+        message: String?,
+        callback: (() -> Unit)? = null,
+    ): AlertDialog? =
         context?.let {
-            AlertDialog.Builder(requireContext())
+            AlertDialog
+                .Builder(requireContext())
                 .setTitle(getString(R.string.error))
                 .setMessage(message)
                 .setPositiveButton(getString(R.string.yes)) { _, _ -> callback?.invoke() }
@@ -59,14 +74,16 @@ abstract class BaseFragment : Fragment() {
     fun showCustomerAlertDialog(
         throwable: Throwable?,
         customer: Customer? = null,
-        callback: (() -> Unit)? = null
+        callback: (() -> Unit)? = null,
     ) {
         if (context != null) {
             var errorMessage = ""
 
             if (customer != null) {
                 errorMessage =
-                    "Customer Information:\n- Name Surname: " + customer.name + " " + customer.surname + "\n- Serial Number: " + customer.serialNumber + "\n\n"
+                    "Customer Information:\n- Name Surname: " + customer.name + " " + customer.surname + "\n- Serial Number: " +
+                    customer.serialNumber +
+                    "\n\n"
             }
 
             try {
@@ -95,14 +112,15 @@ abstract class BaseFragment : Fragment() {
                     if (BuildConfig.DEBUG && e.message != null) e.message!! else "Internal Server Error"
             }
 
-            val alert = android.app.AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.error_message_title))
-                .setMessage(errorMessage)
-                .setPositiveButton("OK") { _, _ ->
-                    callback?.invoke()
-                }
-                .setCancelable(false)
-                .create()
+            val alert =
+                android.app.AlertDialog
+                    .Builder(requireContext())
+                    .setTitle(getString(R.string.error_message_title))
+                    .setMessage(errorMessage)
+                    .setPositiveButton("OK") { _, _ ->
+                        callback?.invoke()
+                    }.setCancelable(false)
+                    .create()
 
             alert.show()
         }

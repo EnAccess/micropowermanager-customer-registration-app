@@ -22,7 +22,13 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
-import com.inensus.android.add_customer.model.*
+import com.inensus.android.add_customer.model.City
+import com.inensus.android.add_customer.model.ConnectionGroup
+import com.inensus.android.add_customer.model.ConnectionType
+import com.inensus.android.add_customer.model.Manufacturer
+import com.inensus.android.add_customer.model.MeterType
+import com.inensus.android.add_customer.model.SubConnectionType
+import com.inensus.android.add_customer.model.Tariff
 import com.inensus.android.add_customer.viewmodel.AddCustomerViewModel
 import com.inensus.android.base.view.BaseFragment
 import com.inensus.android.customer_list.model.Customer
@@ -33,9 +39,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.LocationListener {
-
+class AddCustomerFragment :
+    BaseFragment(),
+    com.google.android.gms.location.LocationListener {
     private val viewModel: AddCustomerViewModel by viewModel()
+
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentAddCustomerBinding? = null
     private val binding get() = _binding!!
 
@@ -51,13 +60,16 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAddCustomerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         if (isAdded && connectionChecker.isOnline) {
@@ -102,7 +114,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 getLocation()
@@ -126,24 +138,28 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     city = viewModel.findCityByName(binding.cityDropdown.value).id,
                     connectionGroup = viewModel.findConnectionGroupByValue(binding.connectionGroupDropdown.value).id,
                     connectionType = viewModel.findConnectionTypeByValue(binding.connectionTypeDropdown.value).id,
-                    subConnectionType = viewModel.findSubConnectionTypeByValue(
-                        binding.subConnectionTypeDropdown.value
-                    ).id,
+                    subConnectionType =
+                        viewModel
+                            .findSubConnectionTypeByValue(
+                                binding.subConnectionTypeDropdown.value,
+                            ).id,
                     geoPoints = geoPoints,
-                    isLocal = true
-                )
+                    isLocal = true,
+                ),
             )
 
             resetForm()
 
-            Toast.makeText(activity, "Data has been inserted into Local Storage", Toast.LENGTH_LONG)
+            Toast
+                .makeText(activity, "Data has been inserted into Local Storage", Toast.LENGTH_LONG)
                 .show()
         }
     }
 
     @SuppressLint("CheckResult")
     fun getManufacturers() {
-        viewModel.getManufacturers()
+        viewModel
+            .getManufacturers()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -160,13 +176,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateManufacturerSpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getMeterTypes() {
-        viewModel.getMeterTypes()
+        viewModel
+            .getMeterTypes()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -183,13 +200,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateMeterTypeSpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getTariffs() {
-        viewModel.getTariffs()
+        viewModel
+            .getTariffs()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -206,13 +224,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateTariffSpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getCities() {
-        viewModel.getCities()
+        viewModel
+            .getCities()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -229,13 +248,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateCitySpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getConnectionGroups() {
-        viewModel.getConnectionGroups()
+        viewModel
+            .getConnectionGroups()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -252,13 +272,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateConnectionGroupSpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getConnectionTypes() {
-        viewModel.getConnectionTypes()
+        viewModel
+            .getConnectionTypes()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -275,13 +296,14 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateConnectionTypeSpinner()
-                }
+                },
             )
     }
 
     @SuppressLint("CheckResult")
     fun getSubConnectionTypes() {
-        viewModel.getSubConnectionTypes()
+        viewModel
+            .getSubConnectionTypes()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showDialog() }
@@ -298,17 +320,18 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 {
                     hideDialog()
                     invalidateSubConnectionTypeSpinner()
-                }
+                },
             )
     }
 
     private fun invalidateManufacturerSpinner(manufacturers: List<Manufacturer> = listOf()) {
         if (isAdded) {
-            val mutableManufacturers: MutableList<Manufacturer> = if (manufacturers.isEmpty()) {
-                preferences.getManufacturers()
-            } else {
-                manufacturers.toMutableList()
-            }
+            val mutableManufacturers: MutableList<Manufacturer> =
+                if (manufacturers.isEmpty()) {
+                    preferences.getManufacturers()
+                } else {
+                    manufacturers.toMutableList()
+                }
 
             binding.manufacturerDropdown.bindData(mutableManufacturers.map { it.name ?: "" })
         }
@@ -316,11 +339,12 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateMeterTypeSpinner(meterTypes: List<MeterType> = listOf()) {
         if (isAdded) {
-            val mutableMeterTypes: MutableList<MeterType> = if (meterTypes.isEmpty()) {
-                preferences.getMeterTypes()
-            } else {
-                meterTypes.toMutableList()
-            }
+            val mutableMeterTypes: MutableList<MeterType> =
+                if (meterTypes.isEmpty()) {
+                    preferences.getMeterTypes()
+                } else {
+                    meterTypes.toMutableList()
+                }
 
             if (mutableMeterTypes.isNotEmpty()) {
                 binding.meterTypeDropdown.bindData(mutableMeterTypes.map { it.toString() })
@@ -330,11 +354,12 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateTariffSpinner(tariffs: List<Tariff> = listOf()) {
         if (isAdded) {
-            val mutableTariffs: MutableList<Tariff> = if (tariffs.isEmpty()) {
-                preferences.getTariffs()
-            } else {
-                tariffs.toMutableList()
-            }
+            val mutableTariffs: MutableList<Tariff> =
+                if (tariffs.isEmpty()) {
+                    preferences.getTariffs()
+                } else {
+                    tariffs.toMutableList()
+                }
 
             binding.tariffDropdown.bindData(mutableTariffs.map { it.name ?: "" })
         }
@@ -342,11 +367,12 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     private fun invalidateCitySpinner(cities: List<City> = listOf()) {
         if (isAdded) {
-            val mutableCities: MutableList<City> = if (cities.isEmpty()) {
-                preferences.getCities()
-            } else {
-                cities.toMutableList()
-            }
+            val mutableCities: MutableList<City> =
+                if (cities.isEmpty()) {
+                    preferences.getCities()
+                } else {
+                    cities.toMutableList()
+                }
 
             binding.cityDropdown.bindData(mutableCities.map { it.name ?: "" })
         }
@@ -388,13 +414,17 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                 }
 
             if (binding.connectionTypeDropdown.value.isNotEmpty()) {
-                val filteredSubConnectionTypes = mutableSubConnectionTypes.filter {
-                    it.connectionTypeId == viewModel.findConnectionTypeByValue(
-                        binding.connectionTypeDropdown.value
-                    ).id
-                }.map {
-                    it.name ?: ""
-                }
+                val filteredSubConnectionTypes =
+                    mutableSubConnectionTypes
+                        .filter {
+                            it.connectionTypeId ==
+                                viewModel
+                                    .findConnectionTypeByValue(
+                                        binding.connectionTypeDropdown.value,
+                                    ).id
+                        }.map {
+                            it.name ?: ""
+                        }
 
                 binding.subConnectionTypeDropdown.bindData(filteredSubConnectionTypes)
             }
@@ -519,17 +549,20 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
     }
 
     private fun startLocationUpdates() {
-        mLocationRequest = LocationRequest.create()
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setInterval(UPDATE_INTERVAL)
-            .setFastestInterval(FASTEST_INTERVAL)
+        mLocationRequest =
+            LocationRequest
+                .create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL)
 
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             return
@@ -537,7 +570,7 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
         LocationServices.FusedLocationApi.requestLocationUpdates(
             mGoogleApiClient,
             mLocationRequest,
-            this
+            this,
         )
     }
 
@@ -547,75 +580,80 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
 
     @Synchronized
     private fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(requireContext())
-            .addApi(LocationServices.API)
-            .build()
+        mGoogleApiClient =
+            GoogleApiClient
+                .Builder(requireContext())
+                .addApi(LocationServices.API)
+                .build()
 
         mGoogleApiClient!!.connect()
     }
 
     private fun checkGPSEnabled(): Boolean {
-        if (!isLocationEnabled())
+        if (!isLocationEnabled()) {
             showAlert()
+        }
         return isLocationEnabled()
     }
 
     private fun showAlert() {
         val dialog = AlertDialog.Builder(requireContext())
-        dialog.setTitle("Enable Location")
+        dialog
+            .setTitle("Enable Location")
             .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " + "use this app")
             .setPositiveButton("Location Settings") { _, _ ->
                 val myIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(myIntent)
-            }
-            .setNegativeButton("Cancel") { _, _ -> }
+            }.setNegativeButton("Cancel") { _, _ -> }
         dialog.show()
     }
 
     private fun isLocationEnabled(): Boolean {
         val locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER
-        )
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+            locationManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER,
+            )
     }
 
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     requireActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 )
             ) {
-                AlertDialog.Builder(requireContext())
+                AlertDialog
+                    .Builder(requireContext())
                     .setTitle("Location Permission Needed")
                     .setMessage("This app needs the Location permission, please accept to use location functionality")
                     .setPositiveButton("OK") { _, _ ->
                         ActivityCompat.requestPermissions(
                             requireActivity(),
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                            REQUEST_LOCATION_CODE
+                            REQUEST_LOCATION_CODE,
                         )
-                    }
-                    .create()
+                    }.create()
                     .show()
-
-            } else ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION_CODE
-            )
+            } else {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_LOCATION_CODE,
+                )
+            }
         }
     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         when (requestCode) {
             REQUEST_LOCATION_CODE -> {
@@ -624,10 +662,11 @@ class AddCustomerFragment : BaseFragment(), com.google.android.gms.location.Loca
                     // permission was granted, yay! Do the location-related task you need to do.
                     if (ContextCompat.checkSelfPermission(
                             requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION
+                            Manifest.permission.ACCESS_FINE_LOCATION,
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        Toast.makeText(requireContext(), "permission granted", Toast.LENGTH_LONG)
+                        Toast
+                            .makeText(requireContext(), "permission granted", Toast.LENGTH_LONG)
                             .show()
                     }
                 } else {

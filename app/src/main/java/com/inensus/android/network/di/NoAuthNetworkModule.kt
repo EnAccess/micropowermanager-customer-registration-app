@@ -8,17 +8,19 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 object NoAuthNetworkModule {
-
-    fun create() = module {
-        single(qualifier = NoAuthQualifiers.NO_AUTH_RETROFIT) {
-            get<Retrofit>(
-                qualifier = Qualifiers.BASE_RETROFIT,
-                parameters = { parametersOf(provideInterceptors()) })
+    fun create() =
+        module {
+            single(qualifier = NoAuthQualifiers.NO_AUTH_RETROFIT) {
+                get<Retrofit>(
+                    qualifier = Qualifiers.BASE_RETROFIT,
+                    parameters = { parametersOf(provideInterceptors()) },
+                )
+            }
         }
-    }
 
-    private fun provideInterceptors(): InterceptorsModel = InterceptorsModel(
-        interceptors = emptyList(),
-        networkInterceptors = emptyList()
-    )
+    private fun provideInterceptors(): InterceptorsModel =
+        InterceptorsModel(
+            interceptors = emptyList(),
+            networkInterceptors = emptyList(),
+        )
 }

@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import com.inensus.android.R
 
 class BaseInputViewCustomizer : FocusableState {
-
     private var hintText: String? = null
     private var titleText: String? = null
     private var editTextText: String? = null
@@ -22,7 +21,10 @@ class BaseInputViewCustomizer : FocusableState {
 
     private lateinit var view: BaseInputView
 
-    fun initializeAttrs(context: Context, attrs: AttributeSet) {
+    fun initializeAttrs(
+        context: Context,
+        attrs: AttributeSet,
+    ) {
         context.obtainStyledAttributes(attrs, R.styleable.BaseInputView).apply {
             titleText = getString(R.styleable.BaseInputView_title)
             hintText = getString(R.styleable.BaseInputView_hint)
@@ -72,8 +74,11 @@ class BaseInputViewCustomizer : FocusableState {
     }
 
     override fun onFocusChanged(isFocused: Boolean) {
-        if (isFocused) showFocused()
-        else showUnfocused()
+        if (isFocused) {
+            showFocused()
+        } else {
+            showUnfocused()
+        }
     }
 
     private fun showUnfocused() {

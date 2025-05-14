@@ -4,5 +4,5 @@ import okhttp3.Interceptor
 
 class InterceptorsModel(
     val interceptors: List<Interceptor>,
-    val networkInterceptors: List<Interceptor>
+    val networkInterceptors: List<Interceptor>,
 )

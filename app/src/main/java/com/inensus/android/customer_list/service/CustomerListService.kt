@@ -11,10 +11,14 @@ import retrofit2.http.POST
 import retrofit2.http.Url
 
 interface CustomerListService {
-
     @GET
-    fun getCustomerList(@Url url: String): Single<GetCustomerListResponse>
+    fun getCustomerList(
+        @Url url: String,
+    ): Single<GetCustomerListResponse>
 
     @POST
-    fun addCustomer(@Url url: String, @Body customer: Customer): Observable<AddCustomerResponse>
+    fun addCustomer(
+        @Url url: String,
+        @Body customer: Customer,
+    ): Observable<AddCustomerResponse>
 }

@@ -4,14 +4,21 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.inensus.android.add_customer.model.*
+import com.inensus.android.add_customer.model.City
+import com.inensus.android.add_customer.model.ConnectionGroup
+import com.inensus.android.add_customer.model.ConnectionType
+import com.inensus.android.add_customer.model.Manufacturer
+import com.inensus.android.add_customer.model.MeterType
+import com.inensus.android.add_customer.model.SubConnectionType
+import com.inensus.android.add_customer.model.Tariff
 
 /**
  * Keeps a reference to the SharedPreference
  * Acts as a Singleton class
  */
-class SharedPreferenceWrapper(context: Context) {
-
+class SharedPreferenceWrapper(
+    context: Context,
+) {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     var accessToken: String

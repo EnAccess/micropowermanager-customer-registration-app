@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-class TitleView(context: Context, attributeSet: AttributeSet) :
-    AppCompatTextView(context, attributeSet),
+class TitleView(
+    context: Context,
+    attributeSet: AttributeSet,
+) : AppCompatTextView(context, attributeSet),
     ErrorState {
     private var errorState: Boolean = false
 

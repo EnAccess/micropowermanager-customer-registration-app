@@ -14,7 +14,6 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class InensusApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
 
@@ -33,8 +32,8 @@ class InensusApplication : Application() {
                     NoAuthNetworkModule.create(),
                     *LoginModule.create().toTypedArray(),
                     *CustomerListModule.create().toTypedArray(),
-                    *AddCustomerModule.create().toTypedArray()
-                )
+                    *AddCustomerModule.create().toTypedArray(),
+                ),
             )
         }
     }

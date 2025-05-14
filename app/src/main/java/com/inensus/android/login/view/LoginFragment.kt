@@ -16,20 +16,25 @@ import com.inensus.android.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
-
     private val viewModel: LoginViewModel by viewModel()
+
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
@@ -37,36 +42,45 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.uiState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is LoginUiState.ServerUrl -> {
-                    if (it.askForServerUrl) {
-                        askForServerUrl()
+        viewModel.uiState.observe(
+            viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    is LoginUiState.ServerUrl -> {
+                        if (it.askForServerUrl) {
+                            askForServerUrl()
+                        }
+                    }
+
+                    is LoginUiState.Success -> {
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        requireActivity().finish()
+                    }
+
+                    is LoginUiState.ValidationError -> {
+                        handleValidationError(it.errors)
                     }
                 }
+            },
+        )
 
-                is LoginUiState.Success -> {
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
-                    requireActivity().finish()
+        viewModel.email.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (binding.emailInput.getText() != it) {
+                    binding.emailInput.setText(it)
                 }
+            },
+        )
 
-                is LoginUiState.ValidationError -> {
-                    handleValidationError(it.errors)
+        viewModel.password.observe(
+            viewLifecycleOwner,
+            Observer {
+                if (binding.passwordInput.getText() != it) {
+                    binding.passwordInput.setText(it)
                 }
-            }
-        })
-
-        viewModel.email.observe(viewLifecycleOwner, Observer {
-            if (binding.emailInput.getText() != it) {
-                binding.emailInput.setText(it)
-            }
-        })
-
-        viewModel.password.observe(viewLifecycleOwner, Observer {
-            if (binding.passwordInput.getText() != it) {
-                binding.passwordInput.setText(it)
-            }
-        })
+            },
+        )
     }
 
     private fun setupListeners() {
@@ -75,7 +89,8 @@ class LoginFragment : BaseFragment() {
         binding.loginButton.setOnClickListener { viewModel.onLoginButtonTapped() }
 
         binding.forgotPasswordText.setOnClickListener {
-            AlertDialog.Builder(requireContext())
+            AlertDialog
+                .Builder(requireContext())
                 .setTitle(getString(R.string.warning))
                 .setCancelable(false)
                 .setMessage(getString(R.string.login_forgot_password_action))
@@ -94,7 +109,8 @@ class LoginFragment : BaseFragment() {
         errors.forEach { validationError ->
             when (validationError) {
                 is LoginUiState.ValidationError.Error.EmailIsBlank,
-                is LoginUiState.ValidationError.Error.EmailIsNotInCorrectFormat -> {
+                is LoginUiState.ValidationError.Error.EmailIsNotInCorrectFormat,
+                -> {
                     binding.emailInput.setErrorState(true)
                 }
 

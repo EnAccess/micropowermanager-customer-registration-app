@@ -9,11 +9,12 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 object ApplicationModule {
-    fun create() = module {
-        single { SharedPreferenceWrapper(get()) }
-        single { InensusDatabase.getDatabase(androidApplication())?.customerDao() }
-        single { SessionExpireBroadcastReceiver() }
-        single { ConnectivityBroadcastReceiver(get()) }
-        single { ConnectionChecker(get()) }
-    }
+    fun create() =
+        module {
+            single { SharedPreferenceWrapper(get()) }
+            single { InensusDatabase.getDatabase(androidApplication())?.customerDao() }
+            single { SessionExpireBroadcastReceiver() }
+            single { ConnectivityBroadcastReceiver(get()) }
+            single { ConnectionChecker(get()) }
+        }
 }

@@ -9,5 +9,8 @@ import retrofit2.http.Url
 
 interface LoginService {
     @POST
-    fun login(@Url url: String, @Body request: LoginRequest): Single<LoginResponse>
+    fun login(
+        @Url url: String,
+        @Body request: LoginRequest,
+    ): Single<LoginResponse>
 }

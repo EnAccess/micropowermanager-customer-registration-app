@@ -9,14 +9,15 @@ import okhttp3.Response
 
 class AuthorizationInterceptor(
     private val context: Context,
-    private val sharedPreferenceWrapper: SharedPreferenceWrapper
+    private val sharedPreferenceWrapper: SharedPreferenceWrapper,
 ) : Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
-
-        val request = chain.request().newBuilder()
-            .addHeader(HEADER_AUTHORIZATION, BEARER + sharedPreferenceWrapper.accessToken)
-            .build()
+        val request =
+            chain
+                .request()
+                .newBuilder()
+                .addHeader(HEADER_AUTHORIZATION, BEARER + sharedPreferenceWrapper.accessToken)
+                .build()
 
         val response = chain.proceed(request)
 
