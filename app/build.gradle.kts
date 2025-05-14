@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.inensus.android"
-    compileSdk = 29
+    compileSdk = 31
 
     defaultConfig {
         applicationId = "com.inensus.android"
         minSdk = 21
-        targetSdk = 29
+        targetSdk = 31
         versionCode = 1
         versionName = "1.4.0"
 
