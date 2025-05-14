@@ -15,9 +15,8 @@ import io.reactivex.rxkotlin.addTo
 class LoginViewModel(
     private val repository: LoginRepository,
     private val validator: LoginFormValidator,
-    private val preferences: SharedPreferenceWrapper
+    private val preferences: SharedPreferenceWrapper,
 ) : BaseViewModel() {
-
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
 
@@ -56,7 +55,8 @@ class LoginViewModel(
     private fun login() {
         showLoading()
 
-        repository.login(_email.value, _password.value)
+        repository
+            .login(_email.value, _password.value)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 hideLoading()

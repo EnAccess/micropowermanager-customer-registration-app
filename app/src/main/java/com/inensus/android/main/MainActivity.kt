@@ -62,25 +62,35 @@ class MainActivity : AppCompatActivity() {
         customerListFragment = CustomerListFragment.newInstance()
         addCustomerFragment = AddCustomerFragment.newInstance()
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.container, customerListFragment, "customerListFragment").commit()
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.container, customerListFragment, "customerListFragment")
+            .commit()
+        supportFragmentManager
+            .beginTransaction()
             .add(R.id.container, addCustomerFragment, "addCustomerFragment")
-            .hide(addCustomerFragment).commit()
+            .hide(addCustomerFragment)
+            .commit()
     }
 
     private fun setupBottomNavigationView() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.customerList -> {
-                    supportFragmentManager.beginTransaction().hide(addCustomerFragment)
-                        .show(customerListFragment).commitNow()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .hide(addCustomerFragment)
+                        .show(customerListFragment)
+                        .commitNow()
                     customerListFragment.getCustomers()
                 }
 
                 R.id.addCustomer -> {
-                    supportFragmentManager.beginTransaction().hide(customerListFragment)
-                        .show(addCustomerFragment).commitNow()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .hide(customerListFragment)
+                        .show(addCustomerFragment)
+                        .commitNow()
                 }
             }
 
@@ -91,32 +101,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupConnectivitySnackBar() {
-        snackBar = Snackbar.make(
-            findViewById(android.R.id.content),
-            getString(R.string.error_network_snackbar),
-            Snackbar.LENGTH_LONG
-        )
+        snackBar =
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                getString(R.string.error_network_snackbar),
+                Snackbar.LENGTH_LONG,
+            )
     }
 
     private fun registerSessionExpireReceiver() {
         registerReceiver(sessionExpireReceiver, IntentFilter(SESSION_EXPIRE_INTENT_ACTION))
 
-        sessionExpireReceiver.event.observe(this, Observer {
-            logout()
-        })
+        sessionExpireReceiver.event.observe(
+            this,
+            Observer {
+                logout()
+            },
+        )
     }
 
     private fun registerNetworkReceiver() {
         registerReceiver(connectivityReceiver, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
 
-        connectivityReceiver.observeNetworkStatusRelay()
+        connectivityReceiver
+            .observeNetworkStatusRelay()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::observeNetworkStatus, Timber::e)
             .addTo(disposable)
     }
 
     private fun observeNetworkStatus(status: ConnectionChecker.NetworkStatus) {
-
         when (status) {
             ConnectionChecker.NetworkStatus.Online -> handleNetworkStatus(true)
             ConnectionChecker.NetworkStatus.Offline -> handleNetworkStatus(false)
@@ -136,7 +150,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        AlertDialog.Builder(this)
+        AlertDialog
+            .Builder(this)
             .setTitle(getString(R.string.warning))
             .setCancelable(false)
             .setMessage(getString(R.string.error_session_expired))
@@ -144,8 +159,7 @@ class MainActivity : AppCompatActivity() {
                 preferences.accessToken = ""
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
-            }
-            .show()
+            }.show()
     }
 
     override fun onBackPressed() {

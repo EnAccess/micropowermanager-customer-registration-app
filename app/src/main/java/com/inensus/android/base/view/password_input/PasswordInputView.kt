@@ -7,7 +7,10 @@ import androidx.core.content.res.ResourcesCompat
 import com.inensus.android.R
 import com.inensus.android.base.view.default_input.DefaultInputView
 
-class PasswordInputView(context: Context, attrs: AttributeSet) : DefaultInputView(context, attrs) {
+class PasswordInputView(
+    context: Context,
+    attrs: AttributeSet,
+) : DefaultInputView(context, attrs) {
     private var passwordState: Boolean = true
 
     override fun setupView() {

@@ -20,33 +20,38 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 object CoreNetworkModule {
-
     private const val DEFAULT_TIMEOUT = 30L
 
-    fun create() = module {
-        single { provideGson() }
+    fun create() =
+        module {
+            single { provideGson() }
 
-        factory { (interceptors: InterceptorsModel) ->
-            provideOkHttp(
-                interceptors = if (BuildConfig.DEBUG) {
-                    interceptors.interceptors + provideHttpLoggingInterceptor()
-                } else {
-                    interceptors.interceptors
-                },
-                networkInterceptors = interceptors.networkInterceptors
-            )
+            factory { (interceptors: InterceptorsModel) ->
+                provideOkHttp(
+                    interceptors =
+                        if (BuildConfig.DEBUG) {
+                            interceptors.interceptors + provideHttpLoggingInterceptor()
+                        } else {
+                            interceptors.interceptors
+                        },
+                    networkInterceptors = interceptors.networkInterceptors,
+                )
+            }
+
+            factory(qualifier = Qualifiers.BASE_RETROFIT) { (interceptors: InterceptorsModel) ->
+                provideRetrofit(
+                    okHttpClient = get(parameters = { parametersOf(interceptors) }),
+                    gson = get(),
+                )
+            }
         }
 
-        factory(qualifier = Qualifiers.BASE_RETROFIT) { (interceptors: InterceptorsModel) ->
-            provideRetrofit(
-                okHttpClient = get(parameters = { parametersOf(interceptors) }),
-                gson = get()
-            )
-        }
-    }
-
-    private fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
-        Retrofit.Builder()
+    private fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        gson: Gson,
+    ): Retrofit =
+        Retrofit
+            .Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -55,34 +60,35 @@ object CoreNetworkModule {
 
     private fun provideOkHttp(
         interceptors: List<Interceptor>?,
-        networkInterceptors: List<Interceptor>?
+        networkInterceptors: List<Interceptor>?,
     ): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
             .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
             .apply {
                 interceptors?.forEach { addInterceptor(it) }
                 networkInterceptors?.forEach { addNetworkInterceptor(it) }
-            }
-            .addNetworkInterceptor { chain ->
+            }.addNetworkInterceptor { chain ->
                 val requestBuilder = chain.request().newBuilder()
                 requestBuilder.header("Content-Type", "application/json")
                 requestBuilder.header("accept", "application/json")
                 chain.proceed(requestBuilder.build())
-            }
-            .build()
+            }.build()
 
     private fun provideGson(): Gson =
         GsonBuilder()
             .setExclusionStrategies(ExclusionGsonStrategy())
-            .setDateFormat(DATE_FORMAT_FULL).create()
+            .setDateFormat(DATE_FORMAT_FULL)
+            .create()
 
     private fun provideHttpLoggingInterceptor(): Interceptor =
-        HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                Timber.tag("Network").d(message)
-            }
-        })
-            .apply { level = HttpLoggingInterceptor.Level.BODY }
+        HttpLoggingInterceptor(
+            object : HttpLoggingInterceptor.Logger {
+                override fun log(message: String) {
+                    Timber.tag("Network").d(message)
+                }
+            },
+        ).apply { level = HttpLoggingInterceptor.Level.BODY }
 }

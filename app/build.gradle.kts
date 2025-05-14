@@ -43,7 +43,7 @@ android {
             resValue("string", "app_name", "Customer Registration")
             proguardFiles(
                 getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -77,14 +77,14 @@ android {
     }
 }
 
-val kotlin_version: String by rootProject.extra
-val koin_version = "2.2.3"
-val room_version = "2.2.5"
+val kotlinVersion: String by rootProject.extra
+val koinVersion = "2.2.3"
+val roomVersion = "2.2.5"
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.preference:preference:1.1.1")
@@ -104,21 +104,21 @@ dependencies {
     implementation("androidx.core:core-ktx:1.5.0-alpha02")
 
     // Room components
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    kapt("androidx.room:room-rxjava2:$room_version")
-    implementation("androidx.room:room-rxjava2:$room_version")
-    androidTestImplementation("androidx.room:room-testing:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-rxjava2:$roomVersion")
+    implementation("androidx.room:room-rxjava2:$roomVersion")
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 
     // Lifecycle components
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     kapt("androidx.lifecycle:lifecycle-compiler:2.2.0")
 
     // Koin
-    implementation("io.insert-koin:koin-androidx-scope:$koin_version")
-    implementation("io.insert-koin:koin-androidx-viewmodel:$koin_version")
-    implementation("io.insert-koin:koin-core:$koin_version")
-    implementation("io.insert-koin:koin-core-ext:$koin_version")
+    implementation("io.insert-koin:koin-androidx-scope:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-viewmodel:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-core-ext:$koinVersion")
 
     // other
     implementation("com.jakewharton.timber:timber:5.0.1")

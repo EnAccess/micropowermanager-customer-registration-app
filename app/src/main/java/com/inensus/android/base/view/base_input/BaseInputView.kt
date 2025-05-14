@@ -17,9 +17,11 @@ import com.inensus.android.util.Constants.ERROR_POPUP_DELAY_IN_MILLIS
 
 abstract class BaseInputView(
     context: Context,
-    attrs: AttributeSet
-) : ConstraintLayout(context, attrs), ErrorState, DisableState, FocusableState {
-
+    attrs: AttributeSet,
+) : ConstraintLayout(context, attrs),
+    ErrorState,
+    DisableState,
+    FocusableState {
     var errorState: Boolean = false
         private set
 
@@ -92,14 +94,17 @@ abstract class BaseInputView(
                 it.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 postDelayed(
                     { it.showAsDropDown(this, 0, 0, Gravity.BOTTOM) },
-                    ERROR_POPUP_DELAY_IN_MILLIS
+                    ERROR_POPUP_DELAY_IN_MILLIS,
                 )
             }
         }
     }
 
     abstract fun getTitleView(): TextView?
+
     abstract fun getMainTextView(): TextView?
+
     abstract fun getIcon(): AppCompatImageView?
+
     abstract fun getBorderView(): View?
 }

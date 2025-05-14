@@ -10,18 +10,18 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 object LoginModule {
+    fun create() =
+        module {
+            single { LoginFormValidator() }
+            viewModel { LoginViewModel(get(), get(), get()) }
+        } + createLoginNetworkModule()
 
-    fun create() = module {
-        single { LoginFormValidator() }
-        viewModel { LoginViewModel(get(), get(), get()) }
-    } + createLoginNetworkModule()
+    private fun createLoginNetworkModule() =
+        module {
+            single { provideLoginService(get(qualifier = NoAuthQualifiers.NO_AUTH_RETROFIT)) }
 
-    private fun createLoginNetworkModule() = module {
-        single { provideLoginService(get(qualifier = NoAuthQualifiers.NO_AUTH_RETROFIT)) }
+            single { LoginRepository(get(), get()) }
+        }
 
-        single { LoginRepository(get(), get()) }
-    }
-
-    private fun provideLoginService(retrofitClient: Retrofit) =
-        retrofitClient.create(LoginService::class.java)
+    private fun provideLoginService(retrofitClient: Retrofit) = retrofitClient.create(LoginService::class.java)
 }

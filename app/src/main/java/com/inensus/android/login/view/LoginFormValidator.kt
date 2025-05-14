@@ -5,7 +5,7 @@ import com.inensus.android.util.Constants.EMAIL_REGEX
 class LoginFormValidator {
     fun validateForm(
         username: String?,
-        password: String?
+        password: String?,
     ): List<LoginUiState.ValidationError.Error> =
         mutableListOf<LoginUiState.ValidationError.Error>().apply {
             if (username.isNullOrEmpty()) {

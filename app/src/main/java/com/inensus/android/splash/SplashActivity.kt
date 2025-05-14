@@ -9,7 +9,6 @@ import com.inensus.android.util.SharedPreferenceWrapper
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
-
     private val preferences: SharedPreferenceWrapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {

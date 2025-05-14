@@ -13,6 +13,7 @@ import com.inensus.android.util.SharedPreferenceWrapper
 import org.koin.android.ext.android.inject
 
 class InputBottomSheetFragment : BottomSheetDialogFragment() {
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentInputBottomSheetBinding? = null
     private val binding get() = _binding!!
 
@@ -23,7 +24,7 @@ class InputBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val contextThemeWrapper = ContextThemeWrapper(activity, R.style.AppTheme)
         val themedInflater = inflater.cloneInContext(contextThemeWrapper)
@@ -32,7 +33,10 @@ class InputBottomSheetFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding.inputView.getTitleView().text = getString(R.string.title_server_url)
         binding.inputView.setText(preferences.baseUrl ?: "")

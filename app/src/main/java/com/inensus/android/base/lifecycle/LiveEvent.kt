@@ -7,11 +7,13 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
 class LiveEvent<T> : MediatorLiveData<T>() {
-
     private val observers = ArraySet<ObserverWrapper<in T>>()
 
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+    override fun observe(
+        owner: LifecycleOwner,
+        observer: Observer<in T>,
+    ) {
         val wrapper = ObserverWrapper(observer)
         observers.add(wrapper)
         super.observe(owner, wrapper)
@@ -48,8 +50,9 @@ class LiveEvent<T> : MediatorLiveData<T>() {
         super.setValue(t)
     }
 
-    private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
-
+    private class ObserverWrapper<T>(
+        val observer: Observer<T>,
+    ) : Observer<T> {
         private var pending = false
 
         override fun onChanged(t: T?) {

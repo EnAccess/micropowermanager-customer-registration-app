@@ -13,8 +13,11 @@ import com.inensus.android.base.view.base_input.ErrorState
 import com.inensus.android.databinding.ViewDropdownInputBinding
 import com.inensus.android.extensions.hide
 
-class DropdownInputView(context: Context, attributeSet: AttributeSet) :
-    ConstraintLayout(context, attributeSet), ErrorState {
+class DropdownInputView(
+    context: Context,
+    attributeSet: AttributeSet,
+) : ConstraintLayout(context, attributeSet),
+    ErrorState {
     private lateinit var binding: ViewDropdownInputBinding
     var onValueChanged: ((String) -> Unit)? = null
     private var errorState: Boolean = false
@@ -44,7 +47,10 @@ class DropdownInputView(context: Context, attributeSet: AttributeSet) :
             super.onCreateDrawableState(extraSpace)
         }
 
-    private fun initializeAttributes(context: Context, attrs: AttributeSet) {
+    private fun initializeAttributes(
+        context: Context,
+        attrs: AttributeSet,
+    ) {
         context.obtainStyledAttributes(attrs, R.styleable.DropdownInputView).use {
             val title = it.getString(R.styleable.DropdownInputView_dropdown_input_title)
 
@@ -52,7 +58,10 @@ class DropdownInputView(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    fun bindData(data: List<String>, firstAsDefault: Boolean = true) {
+    fun bindData(
+        data: List<String>,
+        firstAsDefault: Boolean = true,
+    ) {
         popupMenu.menu.clear()
 
         data.forEach {
@@ -69,13 +78,14 @@ class DropdownInputView(context: Context, attributeSet: AttributeSet) :
     private fun setupView(title: String?) {
         binding.titleText.text = title
 
-        popupMenu = PopupMenu(context, this).apply {
-            setOnMenuItemClickListener { item: MenuItem? ->
-                value = item?.title.toString()
+        popupMenu =
+            PopupMenu(context, this).apply {
+                setOnMenuItemClickListener { item: MenuItem? ->
+                    value = item?.title.toString()
 
-                true
+                    true
+                }
             }
-        }
 
         setOnClickListener {
             popupMenu.dismiss()

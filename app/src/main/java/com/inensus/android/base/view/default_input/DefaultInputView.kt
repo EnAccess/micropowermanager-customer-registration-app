@@ -13,7 +13,10 @@ import com.inensus.android.base.view.base_input.ErrorState
 import com.inensus.android.databinding.ViewDefaultInputBinding
 import com.inensus.android.extensions.afterTextChanged
 
-open class DefaultInputView(context: Context, attrs: AttributeSet) : BaseInputView(context, attrs) {
+open class DefaultInputView(
+    context: Context,
+    attrs: AttributeSet,
+) : BaseInputView(context, attrs) {
     protected lateinit var binding: ViewDefaultInputBinding
 
     var afterTextChanged: ((editable: Editable) -> Unit)? = null

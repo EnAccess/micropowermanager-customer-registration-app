@@ -5,8 +5,9 @@ import android.net.ConnectivityManager
 import android.os.Build
 import com.jakewharton.rxrelay2.BehaviorRelay
 
-class ConnectionChecker(context: Context) {
-
+class ConnectionChecker(
+    context: Context,
+) {
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -16,7 +17,6 @@ class ConnectionChecker(context: Context) {
 
     @Suppress("DEPRECATION")
     fun observeNetworkStatus() {
-
         val networkStatus: NetworkStatus =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.run {
@@ -43,6 +43,7 @@ class ConnectionChecker(context: Context) {
 
     sealed class NetworkStatus {
         object Online : NetworkStatus()
+
         object Offline : NetworkStatus()
     }
 }

@@ -14,9 +14,8 @@ import io.reactivex.schedulers.Schedulers
 
 class CustomerListViewModel(
     private val repository: CustomerListRepository,
-    private val connectionChecker: ConnectionChecker
+    private val connectionChecker: ConnectionChecker,
 ) : BaseViewModel() {
-
     private var _uiState: MutableLiveData<CustomerListUiState> = MutableLiveData()
     val uiState: LiveData<CustomerListUiState> = _uiState
 
@@ -24,34 +23,39 @@ class CustomerListViewModel(
         getCustomers()
     }
 
-    fun getCustomers() = repository.getCustomers()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnSubscribe { showLoading() }
-        .subscribe(
-            {
-                hideLoading()
-                if (it.isNotEmpty()) {
-                    _uiState.value = CustomerListUiState.Success(it)
-                } else {
+    fun getCustomers() =
+        repository
+            .getCustomers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .subscribe(
+                {
+                    hideLoading()
+                    if (it.isNotEmpty()) {
+                        _uiState.value = CustomerListUiState.Success(it)
+                    } else {
+                        _uiState.value = CustomerListUiState.Empty
+                    }
+                },
+                {
                     _uiState.value = CustomerListUiState.Empty
-                }
-            },
-            {
-                _uiState.value = CustomerListUiState.Empty
-                handleError(it.toServiceError())
-            }
-        ).addTo(compositeDisposable)
+                    handleError(it.toServiceError())
+                },
+            ).addTo(compositeDisposable)
 
-    fun deleteCustomerFromLocalStorage(customer: Customer, callback: (() -> Unit)? = null) {
+    fun deleteCustomerFromLocalStorage(
+        customer: Customer,
+        callback: (() -> Unit)? = null,
+    ) {
         repository.deleteCustomerFromLocalStorage(customer, callback)
     }
 
     fun syncLocalStorage() {
         if (connectionChecker.isOnline && repository.localStorageCustomers.isNotEmpty()) {
-
             repository.localStorageCustomers.forEach {
-                repository.addCustomer(it)
+                repository
+                    .addCustomer(it)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
@@ -64,7 +68,7 @@ class CustomerListViewModel(
                         { throwable ->
                             hideLoading()
                             _uiState.value = CustomerListUiState.AddCustomerError(throwable, it)
-                        }
+                        },
                     ).addTo(compositeDisposable)
             }
         }
