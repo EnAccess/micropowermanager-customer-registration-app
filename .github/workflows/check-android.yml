@@ -30,9 +30,6 @@ jobs:
 
       - name: Run Android Lint tool
         run: ./gradlew lint
-        # Temporarily disabled until:
-        # https://github.com/EnAccess/micropowermanager-customer-registration-app/issues/49
-        continue-on-error: true
 
   ktlint:
     runs-on: ubuntu-latest
