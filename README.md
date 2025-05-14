@@ -42,7 +42,6 @@ This repository contains the source code for the [MicroPowerManager Customer Reg
 
 - Install [Android Studio](https://developer.android.com/studio)
 - Git clone the repository
-- (Optional, but recommended) Install [direnv](https://direnv.net/)
 
 ### Build and run the app locally
 
@@ -89,9 +88,14 @@ To create a release APK locally
 
 ### Development setup
 
-If you plan to develop few additional steps are recommended
+If you plan to develop and contribute a few additional steps are recommended
 
-- Install and enable the [Intellij ktlint Plugin](https://plugins.jetbrains.com/plugin/15057-ktlint)
+- Install [Intellij ktlint Plugin](https://plugins.jetbrains.com/plugin/15057-ktlint)
+- Enable [Intellij ktlint Plugin](https://plugins.jetbrains.com/plugin/15057-ktlint) plugin.
+  - Open Setting (**Android Studio > Settings > Tools > KtLint**)
+  - Select `Mode > Distract free (recommended)`
+  - Select `Ruleset version > 1.5.0`
+- Install [direnv](https://direnv.net/)
 - Copy `.envrc.sample` to `.envrc` and adjust `JAVA_HOME=` to match the
   Gradle JDK path from above.
 
