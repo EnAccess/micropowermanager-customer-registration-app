@@ -31,6 +31,19 @@ jobs:
       - name: Run Android Lint tool
         run: ./gradlew lint
 
+  ktlint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup ktlint
+        run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.5.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
+
+      - name: Run ktlint
+        run: ktlint
+
   build-debug:
     runs-on: ubuntu-latest
 

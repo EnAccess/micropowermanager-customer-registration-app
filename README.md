@@ -67,7 +67,6 @@ To build the app
 
   - If already installed, select **jbr_dcevm-11** from the **Gradle JDK** dropdown
 
-- (Optional, but recommended) Copy `.envrc.sample` to `.envrc` and adjust `JAVA_HOME=` to match the Gradle JDK path from above.
 - Click **Sync Project with Gradle files**
 
 **Run on a Device or Emulator:**
@@ -87,6 +86,14 @@ To create a release APK locally
    ```
 
 3. The output APK will be located at `app/build/outputs/apk/release`
+
+### Development setup
+
+If you plan to develop few additional steps are recommended
+
+- Install and enable the [Intellij ktlint Plugin](https://plugins.jetbrains.com/plugin/15057-ktlint)
+- Copy `.envrc.sample` to `.envrc` and adjust `JAVA_HOME=` to match the
+  Gradle JDK path from above.
 
 ## Architecture
 
