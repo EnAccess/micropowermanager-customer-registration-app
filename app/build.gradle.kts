@@ -68,7 +68,6 @@ android {
     }
 
     lint {
-        textOutput = file("stdout")
         textReport = true
     }
 
