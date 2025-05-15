@@ -77,7 +77,6 @@ android {
 }
 
 val kotlinVersion: String by rootProject.extra
-val koinVersion = "2.2.3"
 val roomVersion = "2.2.5"
 
 dependencies {
@@ -114,10 +113,8 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:2.2.0")
 
     // Koin
-    implementation("io.insert-koin:koin-androidx-scope:$koinVersion")
-    implementation("io.insert-koin:koin-androidx-viewmodel:$koinVersion")
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    implementation("io.insert-koin:koin-core-ext:$koinVersion")
+    implementation("io.insert-koin:koin-core:3.2.2")
+    implementation("io.insert-koin:koin-android:3.2.3")
 
     // other
     implementation("com.jakewharton.timber:timber:5.0.1")
