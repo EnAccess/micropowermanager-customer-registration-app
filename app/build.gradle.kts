@@ -77,7 +77,7 @@ android {
 }
 
 val kotlinVersion: String by rootProject.extra
-val roomVersion = "2.2.5"
+val roomVersion = "2.4.3"
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -121,14 +121,6 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0-alpha02")
 
     implementation("com.github.amulyakhare:textdrawable:558677e")
-}
-
-// Temporary workaround to build on M1 Mac's
-// Can be fixed by updating room to 2.4
-configurations.all {
-    resolutionStrategy {
-        force("org.xerial:sqlite-jdbc:3.34.0")
-    }
 }
 
 tasks.register("printVersionName") {
