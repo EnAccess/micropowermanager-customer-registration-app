@@ -29,7 +29,7 @@ jobs:
         run: ./gradlew tasks --all
 
       - name: Run Android Lint tool
-        run: ./gradlew lint
+        run: ./gradlew lint --configure-on-demand
 
   ktlint:
     runs-on: ubuntu-latest
