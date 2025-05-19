@@ -14,7 +14,6 @@ plugins {
 }
 
 extra["kotlinVersion"] = "1.6.21"
-extra["roomVersion"] = "1.1.1"
 extra["archLifecycleVersion"] = "1.1.1"
 
 tasks.register<Delete>("clean") {
