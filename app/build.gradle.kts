@@ -98,7 +98,7 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
     implementation("com.jakewharton.rxrelay2:rxrelay:2.1.0")
-    implementation("androidx.core:core-ktx:1.5.0-alpha02")
+    implementation("androidx.core:core-ktx:1.5.0")
 
     // Room components
     implementation("androidx.room:room-runtime:$roomVersion")
@@ -117,7 +117,7 @@ dependencies {
 
     // other
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("com.google.android.material:material:1.3.0-alpha02")
+    implementation("com.google.android.material:material:1.3.0")
 
     implementation("com.github.amulyakhare:textdrawable:558677e")
 }
