@@ -59,7 +59,7 @@ To build the app
     | Vendor   | `Eclipse Temurin AdoptOpenJDK HotSpot` |
     | Location | `<default>`                            |
 
-    ![Android Studio JetBrains Runtime](docs/images/android-studio-adopt-openjdk-11.png)
+    ![Android Studio Temurin Runtime](docs/images/android-studio-adopt-openjdk-11.png)
 
     **NOTE:** For ideal performance be sure to select the correct architecture.
     For example for users of Mac's with M-chips select `aarch64`.
