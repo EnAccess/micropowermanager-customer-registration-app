@@ -37,7 +37,6 @@ android {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
-            isZipAlignEnabled = true
             isShrinkResources = true
             isDebuggable = false
             resValue("string", "app_name", "Customer Registration")
