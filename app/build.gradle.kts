@@ -51,15 +51,9 @@ android {
         mapDiagnosticLocations = true
     }
 
-    // Setting this to `VERSION_11` yields:
-    // error: cannot find symbol
-    //                   + " Found:\n" + _existingCustomers);
-    //                                   ^
-    //   symbol:   method makeConcatWithConstants(Lookup,String,MethodType,String)
-    //   location: interface StringConcatFactory
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
