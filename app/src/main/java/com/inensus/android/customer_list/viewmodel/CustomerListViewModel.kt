@@ -19,6 +19,11 @@ class CustomerListViewModel(
     private var _uiState: MutableLiveData<CustomerListUiState> = MutableLiveData()
     val uiState: LiveData<CustomerListUiState> = _uiState
 
+    private var currentPage = 1
+    private var lastPage = 1
+    private var isLoadingMore = false
+    private val customers = mutableListOf<Customer>()
+
     init {
         getCustomers()
     }
@@ -72,5 +77,56 @@ class CustomerListViewModel(
                     ).addTo(compositeDisposable)
             }
         }
+    }
+
+    fun loadInitialCustomers() {
+        currentPage = 1
+        customers.clear()
+        repository.getCustomersByPage(currentPage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .subscribe(
+                { response ->
+                    hideLoading()
+                    currentPage = response.currentPage ?: 1
+                    lastPage = response.lastPage ?: 1
+                    customers.clear()
+                    response.data?.let { customers.addAll(it) }
+                    if (customers.isNotEmpty()) {
+                        _uiState.value = CustomerListUiState.Success(customers.toList())
+                    } else {
+                        _uiState.value = CustomerListUiState.Empty
+                    }
+                },
+                {
+                    _uiState.value = CustomerListUiState.Empty
+                    handleError(it.toServiceError())
+                }
+            ).addTo(compositeDisposable)
+    }
+
+    fun loadNextPage() {
+        if (isLoadingMore || currentPage >= lastPage) return
+        isLoadingMore = true
+        _uiState.value = CustomerListUiState.LoadingMore
+        val nextPage = currentPage + 1
+        repository.getCustomersByPage(nextPage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { response ->
+                    currentPage = response.currentPage ?: nextPage
+                    lastPage = response.lastPage ?: lastPage
+                    val newCustomers = response.data ?: emptyList()
+                    customers.addAll(newCustomers)
+                    _uiState.value = CustomerListUiState.Success(customers.toList())
+                    isLoadingMore = false
+                },
+                { error ->
+                    _uiState.value = CustomerListUiState.ErrorLoadingMore(error)
+                    isLoadingMore = false
+                }
+            ).addTo(compositeDisposable)
     }
 }

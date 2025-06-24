@@ -62,13 +62,13 @@ class CustomerListFragment : BaseFragment() {
                     }
 
                     CustomerListUiState.AddCustomerSuccess -> {
-                        getCustomers()
+                        loadInitialCustomers()
                     }
 
                     is CustomerListUiState.AddCustomerError -> {
                         showCustomerAlertDialog(it.throwable, it.customer) {
                             viewModel.deleteCustomerFromLocalStorage(it.customer) {
-                                viewModel.getCustomers()
+                                viewModel.loadInitialCustomers()
                             }
                         }
                     }
@@ -100,11 +100,30 @@ class CustomerListFragment : BaseFragment() {
                     onItemClick = {
                         showWarningDialog(getString(R.string.delete_customer)) {
                             viewModel.deleteCustomerFromLocalStorage(it) {
-                                viewModel.getCustomers()
+                                viewModel.loadInitialCustomers()
                             }
                         }
                     }
                 }
+
+            // Add scroll listener for pagination
+            addOnScrollListener(
+                object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                    override fun onScrolled(
+                        recyclerView: androidx.recyclerview.widget.RecyclerView,
+                        dx: Int,
+                        dy: Int,
+                    ) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                        val totalItemCount = layoutManager.itemCount
+                        val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                        if (totalItemCount > 0 && lastVisibleItem >= totalItemCount - 3) {
+                            viewModel.loadNextPage()
+                        }
+                    }
+                },
+            )
         }
     }
 
@@ -115,11 +134,11 @@ class CustomerListFragment : BaseFragment() {
                 R.color.colorPrimaryDark,
             ),
         )
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getCustomers() }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.loadInitialCustomers() }
     }
 
-    fun getCustomers() {
-        viewModel.getCustomers()
+    fun loadInitialCustomers() {
+        viewModel.loadInitialCustomers()
     }
 
     fun syncLocalStorage() {
