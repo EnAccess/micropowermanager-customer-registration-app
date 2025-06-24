@@ -2,6 +2,7 @@ package com.inensus.android.customer_list.service
 
 import android.os.AsyncTask
 import com.inensus.android.customer_list.model.Customer
+import com.inensus.android.customer_list.model.GetCustomerListResponse
 import com.inensus.android.database.CustomerDao
 import com.inensus.android.util.ConnectionChecker
 import com.inensus.android.util.SharedPreferenceWrapper
@@ -25,8 +26,8 @@ class CustomerListRepository(
             Single.zip(
                 getCustomersFromLocalStorage(),
                 getCustomersFromApi(),
-                BiFunction<List<Customer>, List<Customer>, List<Customer>> { dbResult, apiResult ->
-                    combineLists(dbResult, apiResult)
+                BiFunction<List<Customer>, List<Customer>?, List<Customer>> { dbResult, apiResult ->
+                    combineLists(dbResult, apiResult ?: emptyList())
                 },
             )
         } else {
@@ -53,6 +54,11 @@ class CustomerListRepository(
     ) {
         DeleteCustomerAsyncTask(customerDao, callback).execute(customer)
     }
+
+    fun getCustomersByPage(page: Int): Single<GetCustomerListResponse> =
+        service.getCustomerList(preferences.baseUrl + CUSTOMERS_ENDPOINT + "?page=$page")
+
+    fun getCustomersByUrl(url: String): Single<GetCustomerListResponse> = service.getCustomerList(url)
 
     private class DeleteCustomerAsyncTask internal constructor(
         private val mAsyncTaskDao: CustomerDao,

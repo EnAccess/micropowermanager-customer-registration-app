@@ -15,4 +15,10 @@ sealed class CustomerListUiState {
         val throwable: Throwable,
         val customer: Customer,
     ) : CustomerListUiState()
+
+    object LoadingMore : CustomerListUiState()
+
+    data class ErrorLoadingMore(
+        val throwable: Throwable,
+    ) : CustomerListUiState()
 }

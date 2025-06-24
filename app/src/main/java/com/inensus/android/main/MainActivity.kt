@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                         .hide(addCustomerFragment)
                         .show(customerListFragment)
                         .commitNow()
-                    customerListFragment.getCustomers()
+                    customerListFragment.loadInitialCustomers()
                 }
 
                 R.id.addCustomer -> {
