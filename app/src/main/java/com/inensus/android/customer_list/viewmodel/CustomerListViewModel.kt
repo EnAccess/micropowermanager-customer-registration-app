@@ -102,7 +102,7 @@ class CustomerListViewModel(
                 {
                     _uiState.value = CustomerListUiState.Empty
                     handleError(it.toServiceError())
-                }
+                },
             ).addTo(compositeDisposable)
     }
 
@@ -126,7 +126,7 @@ class CustomerListViewModel(
                 { error ->
                     _uiState.value = CustomerListUiState.ErrorLoadingMore(error)
                     isLoadingMore = false
-                }
+                },
             ).addTo(compositeDisposable)
     }
 }
