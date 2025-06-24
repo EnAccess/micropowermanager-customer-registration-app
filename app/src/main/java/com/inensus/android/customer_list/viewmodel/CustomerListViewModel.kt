@@ -82,7 +82,8 @@ class CustomerListViewModel(
     fun loadInitialCustomers() {
         currentPage = 1
         customers.clear()
-        repository.getCustomersByPage(currentPage)
+        repository
+            .getCustomersByPage(currentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
@@ -111,7 +112,8 @@ class CustomerListViewModel(
         isLoadingMore = true
         _uiState.value = CustomerListUiState.LoadingMore
         val nextPage = currentPage + 1
-        repository.getCustomersByPage(nextPage)
+        repository
+            .getCustomersByPage(nextPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

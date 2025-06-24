@@ -18,5 +18,7 @@ sealed class CustomerListUiState {
 
     object LoadingMore : CustomerListUiState()
 
-    data class ErrorLoadingMore(val throwable: Throwable) : CustomerListUiState()
+    data class ErrorLoadingMore(
+        val throwable: Throwable,
+    ) : CustomerListUiState()
 }
